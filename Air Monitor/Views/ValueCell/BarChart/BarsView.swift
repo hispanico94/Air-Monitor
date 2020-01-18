@@ -1,20 +1,17 @@
 //
-//  BarChartView.swift
+//  BarsView.swift
 //  Air Monitor
 //
-//  Created by Paolo Rocca on 12/01/2020.
+//  Created by Paolo Rocca on 18/01/2020.
 //  Copyright © 2020 Paolo Rocca. All rights reserved.
 //
 
 import SwiftUI
 
-struct BarChartView: View {
-  private let bars: [Bar]
-  private let maxValue: Int
-  
-  init(bars: [Bar]) {
-    self.bars = bars
-    self.maxValue = bars.map(\.value).max() ?? 0
+struct BarsView: View {
+  let bars: [Bar]
+  var maxValue: Int {
+    return bars.map(\.value).max() ?? .max
   }
   
   var body: some View {
@@ -31,25 +28,35 @@ struct BarChartView: View {
   }
 }
 
-
-struct BarChartView_Previews: PreviewProvider {
+struct BarsView_Previews: PreviewProvider {
   private static let previewBars = [
     Bar(id: UUID(), value: 1, color: .green),
     Bar(id: UUID(), value: 2, color: .green),
     Bar(id: UUID(), value: 3, color: .green),
     Bar(id: UUID(), value: 5, color: .yellow),
     Bar(id: UUID(), value: 6, color: .yellow),
-    Bar(id: UUID(), value: 8, color: .red),
+    Bar(id: UUID(), value: 8, color: .yellow),
     Bar(id: UUID(), value: 5, color: .yellow),
     Bar(id: UUID(), value: 3, color: .green),
     Bar(id: UUID(), value: 1, color: .green),
-    Bar(id: UUID(), value: 1, color: .green),
+    Bar(id: UUID(), value: 2, color: .green),
     Bar(id: UUID(), value: 3, color: .green),
     Bar(id: UUID(), value: 4, color: .green),
+    Bar(id: UUID(), value: 6, color: .yellow),
+    Bar(id: UUID(), value: 9, color: .red),
+    Bar(id: UUID(), value: 12, color: .red),
+    Bar(id: UUID(), value: 10, color: .red),
+    Bar(id: UUID(), value: 8, color: .yellow),
+    Bar(id: UUID(), value: 7, color: .yellow),
+    Bar(id: UUID(), value: 6, color: .yellow),
+    Bar(id: UUID(), value: 4, color: .green),
+    Bar(id: UUID(), value: 2, color: .green),
+    Bar(id: UUID(), value: 1, color: .green),
+    Bar(id: UUID(), value: 1, color: .green),
+    Bar(id: UUID(), value: 3, color: .green)
   ]
   
-  static var previews: some View {
-    BarChartView(bars: previewBars)
-      .frame(height: 300, alignment: .center)
-  }
+    static var previews: some View {
+        BarsView(bars: previewBars)
+    }
 }

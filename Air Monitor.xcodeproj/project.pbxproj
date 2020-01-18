@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CF7F75F323D35BB50049561A /* BarsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7F75F223D35BB50049561A /* BarsView.swift */; };
+		CF7F75F523D35C5E0049561A /* VerticalIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7F75F423D35C5E0049561A /* VerticalIndexView.swift */; };
 		CF94C21F23CB8D4700FBADE9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF94C21E23CB8D4700FBADE9 /* AppDelegate.swift */; };
 		CF94C22123CB8D4700FBADE9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF94C22023CB8D4700FBADE9 /* SceneDelegate.swift */; };
 		CF94C22523CB8D4800FBADE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF94C22423CB8D4800FBADE9 /* Assets.xcassets */; };
@@ -19,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CF7F75F223D35BB50049561A /* BarsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarsView.swift; sourceTree = "<group>"; };
+		CF7F75F423D35C5E0049561A /* VerticalIndexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalIndexView.swift; sourceTree = "<group>"; };
 		CF94C21B23CB8D4700FBADE9 /* Air Monitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Air Monitor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF94C21E23CB8D4700FBADE9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CF94C22023CB8D4700FBADE9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -43,6 +47,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CF7F75EF23D35B670049561A /* ValueCell */ = {
+			isa = PBXGroup;
+			children = (
+				CF7F75F623D35CC40049561A /* BarChart */,
+			);
+			path = ValueCell;
+			sourceTree = "<group>";
+		};
+		CF7F75F623D35CC40049561A /* BarChart */ = {
+			isa = PBXGroup;
+			children = (
+				CF94C23523CB953D00FBADE9 /* BarChartView.swift */,
+				CF7F75F223D35BB50049561A /* BarsView.swift */,
+				CF7F75F423D35C5E0049561A /* VerticalIndexView.swift */,
+			);
+			path = BarChart;
+			sourceTree = "<group>";
+		};
 		CF94C21223CB8D4700FBADE9 = {
 			isa = PBXGroup;
 			children = (
@@ -87,7 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				CF94C23323CB933B00FBADE9 /* HomeView.swift */,
-				CF94C23523CB953D00FBADE9 /* BarChartView.swift */,
+				CF7F75EF23D35B670049561A /* ValueCell */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -183,8 +205,10 @@
 				CF94C23C23CB9B9900FBADE9 /* Bar.swift in Sources */,
 				CF94C23423CB933B00FBADE9 /* HomeView.swift in Sources */,
 				CF94C21F23CB8D4700FBADE9 /* AppDelegate.swift in Sources */,
+				CF7F75F323D35BB50049561A /* BarsView.swift in Sources */,
 				CF94C22123CB8D4700FBADE9 /* SceneDelegate.swift in Sources */,
 				CF94C23623CB953D00FBADE9 /* BarChartView.swift in Sources */,
+				CF7F75F523D35C5E0049561A /* VerticalIndexView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
