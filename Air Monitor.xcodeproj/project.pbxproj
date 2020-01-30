@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CF42F26423DCA35000D96CEE /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF42F26323DCA35000D96CEE /* Endpoint.swift */; };
 		CF7F75F323D35BB50049561A /* BarsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7F75F223D35BB50049561A /* BarsView.swift */; };
 		CF7F75F523D35C5E0049561A /* VerticalIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7F75F423D35C5E0049561A /* VerticalIndexView.swift */; };
 		CF94C21F23CB8D4700FBADE9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF94C21E23CB8D4700FBADE9 /* AppDelegate.swift */; };
@@ -18,9 +19,14 @@
 		CF94C23623CB953D00FBADE9 /* BarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF94C23523CB953D00FBADE9 /* BarChartView.swift */; };
 		CF94C23923CB9B0500FBADE9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF94C23823CB9B0500FBADE9 /* Extensions.swift */; };
 		CF94C23C23CB9B9900FBADE9 /* Bar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF94C23B23CB9B9900FBADE9 /* Bar.swift */; };
+		CFD991A823DDF057009765A6 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD991A723DDF057009765A6 /* Models.swift */; };
+		CFD991AA23DDF0C2009765A6 /* RequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD991A923DDF0C2009765A6 /* RequestProvider.swift */; };
+		CFEB5A5023E370790097DE93 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEB5A4F23E370790097DE93 /* Networking.swift */; };
+		CFEB5A5323E375970097DE93 /* CountryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEB5A5223E375970097DE93 /* CountryProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CF42F26323DCA35000D96CEE /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		CF7F75F223D35BB50049561A /* BarsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarsView.swift; sourceTree = "<group>"; };
 		CF7F75F423D35C5E0049561A /* VerticalIndexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalIndexView.swift; sourceTree = "<group>"; };
 		CF94C21B23CB8D4700FBADE9 /* Air Monitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Air Monitor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -34,6 +40,10 @@
 		CF94C23523CB953D00FBADE9 /* BarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartView.swift; sourceTree = "<group>"; };
 		CF94C23823CB9B0500FBADE9 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		CF94C23B23CB9B9900FBADE9 /* Bar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bar.swift; sourceTree = "<group>"; };
+		CFD991A723DDF057009765A6 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		CFD991A923DDF0C2009765A6 /* RequestProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestProvider.swift; sourceTree = "<group>"; };
+		CFEB5A4F23E370790097DE93 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
+		CFEB5A5223E375970097DE93 /* CountryProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +57,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CF42F26223DCA33C00D96CEE /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				CFEB5A5123E3754D0097DE93 /* Providers */,
+				CFD991A723DDF057009765A6 /* Models.swift */,
+				CFD991A923DDF0C2009765A6 /* RequestProvider.swift */,
+				CF42F26323DCA35000D96CEE /* Endpoint.swift */,
+				CFEB5A4F23E370790097DE93 /* Networking.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
 		CF7F75EF23D35B670049561A /* ValueCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -84,6 +106,7 @@
 		CF94C21D23CB8D4700FBADE9 /* Air Monitor */ = {
 			isa = PBXGroup;
 			children = (
+				CF42F26223DCA33C00D96CEE /* Networking */,
 				CF94C23A23CB9B8500FBADE9 /* Models */,
 				CF94C23723CB9AF500FBADE9 /* Utilities */,
 				CF94C23223CB932900FBADE9 /* Views */,
@@ -128,6 +151,14 @@
 				CF94C23B23CB9B9900FBADE9 /* Bar.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		CFEB5A5123E3754D0097DE93 /* Providers */ = {
+			isa = PBXGroup;
+			children = (
+				CFEB5A5223E375970097DE93 /* CountryProvider.swift */,
+			);
+			path = Providers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -202,13 +233,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				CF94C23923CB9B0500FBADE9 /* Extensions.swift in Sources */,
+				CF42F26423DCA35000D96CEE /* Endpoint.swift in Sources */,
 				CF94C23C23CB9B9900FBADE9 /* Bar.swift in Sources */,
+				CFEB5A5023E370790097DE93 /* Networking.swift in Sources */,
 				CF94C23423CB933B00FBADE9 /* HomeView.swift in Sources */,
 				CF94C21F23CB8D4700FBADE9 /* AppDelegate.swift in Sources */,
+				CFD991AA23DDF0C2009765A6 /* RequestProvider.swift in Sources */,
 				CF7F75F323D35BB50049561A /* BarsView.swift in Sources */,
+				CFEB5A5323E375970097DE93 /* CountryProvider.swift in Sources */,
 				CF94C22123CB8D4700FBADE9 /* SceneDelegate.swift in Sources */,
 				CF94C23623CB953D00FBADE9 /* BarChartView.swift in Sources */,
 				CF7F75F523D35C5E0049561A /* VerticalIndexView.swift in Sources */,
+				CFD991A823DDF057009765A6 /* Models.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
