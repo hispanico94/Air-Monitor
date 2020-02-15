@@ -18,7 +18,7 @@ struct BarChartView: View {
       max > 0
       else { return [] }
     
-    let step = Double(max) / 6
+    let step = Double(max) / 4
     
     return Array(stride(from: Double(0), to: Double(max), by: step)) + [Double(max)]
   }
@@ -36,6 +36,7 @@ struct BarChartView: View {
         VerticalIndexView(values: self.yAxisValues, formatter: self.formatter)
           .font(.footnote)
           .frame(height: geometry.size.height)
+          .layoutPriority(1)
         
         BarsView(bars: self.bars)
       }

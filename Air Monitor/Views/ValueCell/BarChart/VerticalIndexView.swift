@@ -17,13 +17,14 @@ struct VerticalIndexView: View {
       ForEach(self.values.reversed(), id: \.self) { value in
         Group {
           if self.values.last != value {
-            Spacer()
+            Spacer(minLength: 0)
           }
           
           Text("\(self.formatter.string(from: NSNumber(floatLiteral: value)) ?? "")")
+            .font(.caption)
           
           if self.values.first != value {
-            Spacer()
+            Spacer(minLength: 0)
           }
         }
       }

@@ -14,6 +14,8 @@
 		CF18434A23EEF8A900863CBA /* ExecuteRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF18434923EEF8A900863CBA /* ExecuteRequest.swift */; };
 		CF18434C23EEFBEB00863CBA /* Current.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF18434B23EEFBEB00863CBA /* Current.swift */; };
 		CF18434E23EEFC3B00863CBA /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF18434D23EEFC3B00863CBA /* Network.swift */; };
+		CF18DF3C23F8397C00EFE48B /* InformationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF18DF3B23F8397C00EFE48B /* InformationsView.swift */; };
+		CF18DF3E23F83D6800EFE48B /* ValueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF18DF3D23F83D6800EFE48B /* ValueCell.swift */; };
 		CF68DF9A23F06A1200DD5D9E /* ZoneProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF68DF9923F06A1200DD5D9E /* ZoneProvider.swift */; };
 		CF7F75F323D35BB50049561A /* BarsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7F75F223D35BB50049561A /* BarsView.swift */; };
 		CF7F75F523D35C5E0049561A /* VerticalIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7F75F423D35C5E0049561A /* VerticalIndexView.swift */; };
@@ -39,6 +41,8 @@
 		CF18434923EEF8A900863CBA /* ExecuteRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExecuteRequest.swift; sourceTree = "<group>"; };
 		CF18434B23EEFBEB00863CBA /* Current.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Current.swift; sourceTree = "<group>"; };
 		CF18434D23EEFC3B00863CBA /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		CF18DF3B23F8397C00EFE48B /* InformationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationsView.swift; sourceTree = "<group>"; };
+		CF18DF3D23F83D6800EFE48B /* ValueCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueCell.swift; sourceTree = "<group>"; };
 		CF68DF9923F06A1200DD5D9E /* ZoneProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoneProvider.swift; sourceTree = "<group>"; };
 		CF7F75F223D35BB50049561A /* BarsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarsView.swift; sourceTree = "<group>"; };
 		CF7F75F423D35C5E0049561A /* VerticalIndexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalIndexView.swift; sourceTree = "<group>"; };
@@ -93,6 +97,8 @@
 			isa = PBXGroup;
 			children = (
 				CF7F75F623D35CC40049561A /* BarChart */,
+				CF18DF3B23F8397C00EFE48B /* InformationsView.swift */,
+				CF18DF3D23F83D6800EFE48B /* ValueCell.swift */,
 			);
 			path = ValueCell;
 			sourceTree = "<group>";
@@ -274,7 +280,9 @@
 				CF8F47EC23ECA36100F3A48C /* HTTP.swift in Sources */,
 				CF18434C23EEFBEB00863CBA /* Current.swift in Sources */,
 				CF94C22123CB8D4700FBADE9 /* SceneDelegate.swift in Sources */,
+				CF18DF3E23F83D6800EFE48B /* ValueCell.swift in Sources */,
 				CF94C23623CB953D00FBADE9 /* BarChartView.swift in Sources */,
+				CF18DF3C23F8397C00EFE48B /* InformationsView.swift in Sources */,
 				CF7F75F523D35C5E0049561A /* VerticalIndexView.swift in Sources */,
 				CFD991A823DDF057009765A6 /* DataModels.swift in Sources */,
 			);
