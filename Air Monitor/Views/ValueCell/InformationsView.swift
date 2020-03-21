@@ -9,51 +9,52 @@
 import SwiftUI
 
 struct InformationsView: View {
-  var measureName = "PM10:"
-  var measureValue = "110"
-  var measureUnit = "µg/m"
-  var date = Date()
-  
-  var initialDate = Date(timeIntervalSinceNow: -2_592_000)
-  
-  var dateFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.calendar = Calendar.current
-    formatter.locale = Calendar.current.locale
-    formatter.dateFormat = "dd/MM/yyyy"
-    return formatter
-  }()
+  let currentMeasure: CurrentMeasure
+  let measureDateBounds: (String, String)
   
   var body: some View {
     VStack(alignment: .leading, spacing: 8) {
       HStack(alignment: .lastTextBaseline) {
-        Text(measureName)
+        Text(currentMeasure.name)
           .bold()
           .padding(.trailing, 4)
         
-        Text(measureValue)
+        Text(currentMeasure.value)
           .font(.title)
           .fontWeight(.medium)
           .foregroundColor(.red)
         
-        Text(measureUnit)
+        Text(currentMeasure.unit)
         
         Spacer(minLength: 4)
         
-        Text("Aggiornato al \(date, formatter: dateFormatter)")
+        Text("Aggiornato al \(currentMeasure.date)")
           .font(.caption)
           .minimumScaleFactor(0.8)
       }
       
-      Text("Dal \(initialDate, formatter: dateFormatter) al \(date, formatter: dateFormatter):")
+      Text("Dal \(measureDateBounds.0) al \(measureDateBounds.1):")
         .font(.caption)
     }
   }
 }
 
 struct InformationsView_Previews: PreviewProvider {
+  static let currentMeasure = CurrentMeasure(
+    name: "PM10",
+    value: "100",
+    unit: "ug/m3",
+    riskColor: .red,
+    date: "09/03/2020"
+  )
+  
+  static let measureDateBounds = ("01/03/2020", "09/03/2020")
+  
   static var previews: some View {
-    InformationsView()
+    InformationsView(
+      currentMeasure: currentMeasure,
+      measureDateBounds: measureDateBounds
+    )
       .previewDevice("iPhone SE")
   }
 }

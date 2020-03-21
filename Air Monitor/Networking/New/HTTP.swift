@@ -83,3 +83,18 @@ extension HTTP.Response.Raw {
     )
   }
 }
+
+extension HTTP.Error: Identifiable {
+  var id: Int {
+    switch self {
+    case .invalidStatusCode:
+      return 0
+    case .responseError:
+      return 1
+    case .noHTTPResponse:
+      return 2
+    case .noData:
+      return 3
+    }
+  }
+}

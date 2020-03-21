@@ -20,6 +20,17 @@ extension NumberFormatter {
     formatter.locale = Calendar.current.locale
     formatter.maximumFractionDigits = 1
     formatter.minimumFractionDigits = 0
+    formatter.numberStyle = .decimal
+    return formatter
+  }
+}
+
+extension DateFormatter {
+  static var airParameterFormatter: DateFormatter {
+    let formatter = DateFormatter()
+    formatter.calendar = Calendar.current
+    formatter.locale = Calendar.current.locale
+    formatter.dateFormat = "dd/MM/yyyy"
     return formatter
   }
 }

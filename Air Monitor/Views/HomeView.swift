@@ -10,9 +10,9 @@ import SwiftUI
 
 struct HomeView: View {
   var body: some View {
-    NavigationView {
-      Text("Hello, World!")
-        .navigationBarTitle("Air Quality")
+    TabView {
+      MeasurementsView()
+      MapView()
     }
   }
 }

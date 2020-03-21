@@ -18,7 +18,8 @@ enum LocationProvider {
       
       switch parameter {
       case .left(let zone):
-        parameters = "?city=\(zone.name)"
+        let urlParameter = zone.name.replacingOccurrences(of: " ", with: "+")
+        parameters = "?city=\(urlParameter)"
       case .right(let coordinate):
         parameters =
           "?coordinates=\(coordinate.latitude),\(coordinate.longitude)"
@@ -29,7 +30,7 @@ enum LocationProvider {
         method: .get,
         body: nil,
         headers: Current.client.configuration.defaultHeaders(),
-        url: Current.client.configuration.rootURL().appendingPathComponent(path + parameters)
+        url: URL(string: Current.client.configuration.rootURL().absoluteString + path + parameters)!
       )
     }
   }

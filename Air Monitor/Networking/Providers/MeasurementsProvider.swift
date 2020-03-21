@@ -10,14 +10,23 @@ import Foundation
 
 enum MeasurementsProvider {
   struct Request {
-    let parameter: Either<Location, Coordinate>
+    let location: Either<Location, Coordinate>
+    
+    private var oneMonthAgo: String {
+      let oneMonthAgoDate = Date(timeIntervalSinceNow: -2_592_000)
+      
+      let formatter = ISO8601DateFormatter()
+      formatter.formatOptions = .withFullDate
+      
+      return formatter.string(from: oneMonthAgoDate)
+    }
     
     var HTTPRequest: HTTP.Request {
       let path = "measurements"
       let standardParameter = "?limit=10000"
       var parameters = ""
       
-      switch parameter {
+      switch location {
       case .left(let location):
         parameters = "&location=\(location.name)"
       case .right(let coordinate):
@@ -26,11 +35,19 @@ enum MeasurementsProvider {
         + (coordinate.radius.map { "&radius=\($0)" } ?? "")
       }
       
+      // returning only the air parameter we need
+      AirParameter.allCases.forEach { parameter in
+        parameters.append(contentsOf: "&parameter=\(parameter.rawValue)")
+      }
+      
+      // returning only the last month data
+      parameters.append(contentsOf: "&date_from=\(oneMonthAgo)")
+      
       return HTTP.Request(
         method: .get,
         body: nil,
         headers: Current.client.configuration.defaultHeaders(),
-        url: Current.client.configuration.rootURL().appendingPathComponent(path + standardParameter + parameters)
+        url: URL(string: Current.client.configuration.rootURL().absoluteString + path + standardParameter + parameters)!
       )
     }
   }
@@ -47,7 +64,6 @@ extension ExecuteRequest where RequestModel == MeasurementsProvider.Request, Res
   },
     handleResponse: { response in
       let decoder = JSONDecoder()
-      decoder.dateDecodingStrategy = .iso8601
       
       return try? decoder
         .decode(MeasurementsProvider.Response.self, from: response.output)

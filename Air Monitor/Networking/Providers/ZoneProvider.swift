@@ -24,7 +24,7 @@ enum ZoneProvider {
         method: .get,
         body: nil,
         headers: Current.client.configuration.defaultHeaders(),
-        url: Current.client.configuration.rootURL().appendingPathComponent(path + paramteter)
+        url: URL(string: Current.client.configuration.rootURL().absoluteString + path + paramteter)!
       )
     }
   }

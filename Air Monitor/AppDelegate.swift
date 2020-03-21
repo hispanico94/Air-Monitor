@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
     
-    ExecuteRequest.getCountries.run(with: .init())
+    ExecuteRequest.getZones.run(with: .init(country: Country(code: "IT", name: "Italy")))
       .sink(
         receiveCompletion: { print("CALL COMPLETION: \($0)") },
         receiveValue: { print("RECEIVED VALUES \(String(describing: $0))") }
