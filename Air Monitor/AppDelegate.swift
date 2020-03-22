@@ -11,19 +11,9 @@ import Combine
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
-  var cancellable = Set<AnyCancellable>()
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
-    
-    ExecuteRequest.getZones.run(with: .init(country: Country(code: "IT", name: "Italy")))
-      .sink(
-        receiveCompletion: { print("CALL COMPLETION: \($0)") },
-        receiveValue: { print("RECEIVED VALUES \(String(describing: $0))") }
-    )
-      .store(in: &cancellable)
     
     return true
   }

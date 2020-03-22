@@ -84,9 +84,7 @@ struct Measurement: Decodable {
     
     let dateContainer = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .date)
     let dateString = try dateContainer.decode(String.self, forKey: .utc)
-    let dateFormatter = ISO8601DateFormatter()
-    dateFormatter.formatOptions = .withFractionalSeconds
-    self.date = dateFormatter.date(from: dateString)!
+    self.date = ISO8601DateFormatter.openAqiDateFormatter.date(from: dateString)!
   }
 }
 

@@ -20,7 +20,7 @@ struct ValueCell: View {
       BarChartView(bars: state.bars)
     }
     .padding(16)
-//    .background(Color.primary)
+    .background(Color(.secondarySystemBackground))
     .cornerRadius(16)
     .padding(.horizontal, 8)
     .shadow(radius: 5, y: 3)

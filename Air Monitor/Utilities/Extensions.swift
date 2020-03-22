@@ -34,3 +34,22 @@ extension DateFormatter {
     return formatter
   }
 }
+
+extension ISO8601DateFormatter {
+  static var openAqiDateFormatter: ISO8601DateFormatter {
+    let dateFormatter = ISO8601DateFormatter()
+    dateFormatter.formatOptions = [
+      .withInternetDateTime,
+      .withFractionalSeconds
+      ]
+    return dateFormatter
+  }
+}
+
+extension Date {
+  func isInTheSameDay(of date2: Date) -> Bool {
+    var calendar = Calendar.current
+    calendar.timeZone = TimeZone(identifier: "UTC")!
+    return calendar.isDate(self, equalTo: date2, toGranularity: .day)
+  }
+}

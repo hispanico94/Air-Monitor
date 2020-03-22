@@ -21,7 +21,7 @@ struct BarsView: View {
           Capsule()
             .fill(bar.color)
             .frame(height: CGFloat(bar.value) / CGFloat(self.maxValue) * geometry.size.height)
-            .overlay(Rectangle().stroke(Color.white))
+            .overlay(Rectangle().stroke(Color(.secondarySystemBackground)))
         }
       }
     }

@@ -15,14 +15,14 @@ struct InformationsView: View {
   var body: some View {
     VStack(alignment: .leading, spacing: 8) {
       HStack(alignment: .lastTextBaseline) {
-        Text(currentMeasure.name)
+        Text("\(currentMeasure.name):")
           .bold()
           .padding(.trailing, 4)
         
         Text(currentMeasure.value)
           .font(.title)
           .fontWeight(.medium)
-          .foregroundColor(.red)
+          .foregroundColor(currentMeasure.riskColor)
         
         Text(currentMeasure.unit)
         

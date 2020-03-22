@@ -36,6 +36,7 @@ struct ValueCellState {
     return (olderDateString, newerDateString)
   }
   
+  // TODO: COLLECT BY DAY ONLY MAX VALUE MEASUREMENT
   var bars: [Bar] {
     dateAscendingMeasurements
       .map { measurement in
