@@ -223,7 +223,7 @@ enum EAQI: Int {
     case .moderate:
       return Color(.systemYellow)
     case .fair:
-      return Color(.systemIndigo)
+      return Color(.systemGreen)
     case .good:
       return Color(.systemTeal)
     }
