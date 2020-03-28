@@ -52,4 +52,10 @@ extension Date {
     calendar.timeZone = TimeZone(identifier: "UTC")!
     return calendar.isDate(self, equalTo: date2, toGranularity: .day)
   }
+  
+  func toMidnight(in timeZone: TimeZone) -> Date? {
+    var calendar = Calendar.current
+    calendar.timeZone = timeZone
+    return calendar.date(bySettingHour: 0, minute: 0, second: 0, of: self)
+  }
 }

@@ -47,9 +47,9 @@ extension Location: Identifiable {
 // MARK: - Measurement
 
 struct Measurement: Decodable {
-  let location: Location
-  let date: Date
-  let measurement: AirMeasurement
+  var location: Location
+  var date: Date
+  var measurement: AirMeasurement
   
   enum CodingKeys: String, CodingKey {
     case location

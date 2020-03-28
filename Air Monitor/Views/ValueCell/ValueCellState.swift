@@ -36,16 +36,26 @@ struct ValueCellState {
     return (olderDateString, newerDateString)
   }
   
-  // TODO: COLLECT BY DAY ONLY MAX VALUE MEASUREMENT
   var bars: [Bar] {
-    dateAscendingMeasurements
-      .map { measurement in
-        Bar(
-          id: UUID(),
-          value: Int(measurement.measurement.value.rounded()),
-          color: measurement.measurement.eaqi?.color ?? .gray
-        )
-    }
+    let utc = TimeZone(identifier: "UTC")!
+    
+    return dateAscendingMeasurements
+      .lazy
+      .map { measurement -> Measurement in updating(measurement) { $0.date = $0.date.toMidnight(in: utc) ?? $0.date } }
+      .reduce(into: [Date: [Measurement]](), { partialResult, measurement in
+        partialResult[measurement.date, default: []].append(measurement)
+      })
+      .map({ _, measurements -> Measurement in
+        measurements.max(by: \.measurement.value)!
+      })
+      .sorted { $0.date < $1.date }
+      .map { measurement -> Bar in
+          Bar(
+            id: UUID(),
+            value: measurement.measurement.value,
+            color: measurement.measurement.eaqi?.color ?? .gray
+          )
+      }
   }
 }
 
