@@ -10,8 +10,8 @@ import SwiftUI
 
 struct BarsView: View {
   let bars: [Bar]
-  var maxValue: Int {
-    return bars.map(\.value).max() ?? .max
+  var maxValue: Double {
+    return bars.map(\.value).max() ?? .greatestFiniteMagnitude
   }
   
   var body: some View {

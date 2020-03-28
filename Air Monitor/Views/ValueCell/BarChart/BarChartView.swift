@@ -10,7 +10,7 @@ import SwiftUI
 
 struct BarChartView: View {
   private let bars: [Bar]
-  private let maxValue: Int
+  private let maxValue: Double
   
   private var yAxisValues: [Double] {
     guard
@@ -18,16 +18,16 @@ struct BarChartView: View {
       max > 0
       else { return [] }
     
-    let step = Double(max) / 4
+    let step = max / 4
     
-    return Array(stride(from: Double(0), to: Double(max), by: step)) + [Double(max)]
+    return Array(stride(from: Double(0), to: max, by: step)) + [max]
   }
   
   private let formatter = NumberFormatter.singleDecimal
   
   init(bars: [Bar]) {
     self.bars = bars
-    self.maxValue = bars.map(\.value).max() ?? 0
+    self.maxValue = bars.map(\.value).max() ?? 0.0
   }
   
   var body: some View {
