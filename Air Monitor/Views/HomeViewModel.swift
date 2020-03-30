@@ -14,13 +14,15 @@ final class HomeViewModel: ObservableObject {
   private var locationSubject = PassthroughSubject<Location?, HTTP.Error>()
   private var location: Location? {
     didSet {
+      loading = true
       locationSubject.send(location)
     }
   }
   
   
-  @Published var cells = [ValueCellState]()
+  @Published private(set) var cells = [ValueCellState]()
   @Published var error: HTTP.Error? = nil
+  @Published private(set) var loading = false
   
   var locationName: String {
     location?.name ?? ""
@@ -47,18 +49,20 @@ final class HomeViewModel: ObservableObject {
       .handleEvents(
         receiveOutput: { [weak self] _ in
           guard let self = self else { return }
+          self.loading = false
           if self.error != nil {
             self.error = nil
           }
         },
         receiveCompletion: { [weak self] completion in
+          self?.loading = false
           switch completion {
           case .finished:
             break
           case .failure(let error):
             self?.error = error
           }
-        })
+      })
       .replaceError(with: [])
       .assign(to: \.cells, on: self)
       .store(in: &cancellables)

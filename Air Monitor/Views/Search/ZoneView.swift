@@ -68,7 +68,7 @@ struct ZoneView: View {
       if viewModel.errorMessage.isEmpty {
         List(viewModel.zones) { zone in
           NavigationLink(destination: LocationView(viewModel: LocationViewModel(zone: zone), onLocationSelection: self.onLocationSelection)) {
-            Text(zone.name)
+            Text(zone.name.lowercased().capitalized)
           }
         }
         .navigationBarTitle(viewModel.title)

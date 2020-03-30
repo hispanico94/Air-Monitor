@@ -63,7 +63,7 @@ struct LocationView: View {
     Group {
       if viewModel.errorMessage.isEmpty {
         List(viewModel.locations) { location in
-          Button(location.name) {
+          Button(location.name.lowercased().capitalized) {
             self.onLocationSelection(location)
           }
         }

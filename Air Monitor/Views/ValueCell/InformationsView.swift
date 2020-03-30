@@ -28,12 +28,12 @@ struct InformationsView: View {
         
         Spacer(minLength: 4)
         
-        Text("Aggiornato al \(currentMeasure.date)")
+        Text("Last update: \(currentMeasure.date)")
           .font(.caption)
           .minimumScaleFactor(0.8)
       }
       
-      Text("Dal \(measureDateBounds.0) al \(measureDateBounds.1):")
+      Text("From \(measureDateBounds.0) to \(measureDateBounds.1):")
         .font(.caption)
     }
   }

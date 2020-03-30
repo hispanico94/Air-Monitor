@@ -16,29 +16,33 @@ struct MeasurementsView: View {
     UITableView.appearance().separatorStyle = .none
     
     return NavigationView {
-      EmptyListView(
-        data: viewModel.cells,
-        emptyContent: {
-          Text("No data available.\nPlease search another location")
-            .fontWeight(.medium)
-            .multilineTextAlignment(.center)
-            .foregroundColor(.secondary)
-      },
-        rowContent: ValueCell.init(state:)
-      )
-      .alert(item: $viewModel.error) { error in
-        Alert(title: Text("Error"), message: Text(error.localizedDescription), dismissButton: .default(Text("Ok")))
+      ZStack {
+        EmptyListView(
+          data: viewModel.cells,
+          emptyContent: {
+            Text(self.viewModel.loading ? "" : "No data available.\nPlease search another location")
+              .fontWeight(.medium)
+              .multilineTextAlignment(.center)
+              .foregroundColor(.secondary)
+        },
+          rowContent: ValueCell.init(state:)
+        )
+          .alert(item: $viewModel.error) { error in
+            Alert(title: Text("Error"), message: Text(error.localizedDescription), dismissButton: .default(Text("Ok")))
+        }
+        
+        ActivityIndicator(isAnimating: viewModel.loading, style: .large)
       }
-        .navigationBarTitle(viewModel.locationName)
-        .navigationBarItems(trailing: Button(
-          action: { self.isSheetPresented.toggle() },
-          label: {
-            HStack {
-              Text("Search")
-              Image(systemName: "magnifyingglass")
-                .imageScale(.large)
-            }
-        })
+      .navigationBarTitle(viewModel.locationName.lowercased().capitalized)
+      .navigationBarItems(trailing: Button(
+        action: { self.isSheetPresented.toggle() },
+        label: {
+          HStack {
+            Text("Search")
+            Image(systemName: "magnifyingglass")
+              .imageScale(.large)
+          }
+      })
       )
     }
     .tabItem {
