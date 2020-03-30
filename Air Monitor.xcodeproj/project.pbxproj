@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CF01329924327B3E004115DD /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF01329824327B3E004115DD /* ActivityIndicator.swift */; };
 		CF16361C23EF2DDC00AD051B /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF16361B23EF2DDC00AD051B /* AppError.swift */; };
 		CF17280223F7EFD4009C4A29 /* LocationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF17280123F7EFD4009C4A29 /* LocationProvider.swift */; };
 		CF17280423F7F543009C4A29 /* MeasurementsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF17280323F7F543009C4A29 /* MeasurementsProvider.swift */; };
@@ -43,6 +44,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CF01329824327B3E004115DD /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		CF16361B23EF2DDC00AD051B /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		CF17280123F7EFD4009C4A29 /* LocationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationProvider.swift; sourceTree = "<group>"; };
 		CF17280323F7F543009C4A29 /* MeasurementsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementsProvider.swift; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 				CF7F75EF23D35B670049561A /* ValueCell */,
 				CF843DE2240C116200C0F17E /* HomeViewModel.swift */,
 				CF1E5CAD24261F07008C2449 /* EmptyListView.swift */,
+				CF01329824327B3E004115DD /* ActivityIndicator.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -323,6 +326,7 @@
 				CF18DF3E23F83D6800EFE48B /* ValueCell.swift in Sources */,
 				CFB6A94C240A6795002592CB /* MeasurementsView.swift in Sources */,
 				CF843DE3240C116200C0F17E /* HomeViewModel.swift in Sources */,
+				CF01329924327B3E004115DD /* ActivityIndicator.swift in Sources */,
 				CF4B864E241CE226008F5C7B /* ZoneView.swift in Sources */,
 				CF94C23623CB953D00FBADE9 /* BarChartView.swift in Sources */,
 				CF18DF3C23F8397C00EFE48B /* InformationsView.swift in Sources */,
