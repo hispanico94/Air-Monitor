@@ -23,11 +23,25 @@ enum CountryProvider {
   }
   
   struct Response: Decodable {
-    var results: [Country]
+    struct CountryDTO: Decodable {
+      let name: String?
+      let code: String?
+      
+      var toCountry: Country? {
+        guard
+          let name = name,
+          let code = code
+          else { return nil }
+        
+        return Country(code: code, name: name)
+      }
+    }
+    
+    var results: [CountryDTO]
     
     var countries : [Country] {
       results
-        .filter { $0.name != nil && $0.code != nil }
+        .compactMap(\.toCountry)
     }
   }
 }

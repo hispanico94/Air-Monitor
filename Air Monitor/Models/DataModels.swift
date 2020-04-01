@@ -12,15 +12,13 @@ import SwiftUI
 
 // MARK: - Country
 
-struct Country: Decodable {
-  let code: String?
-  let name: String?
+struct Country {
+  let code: String
+  let name: String
 }
 
 extension Country: Identifiable {
-  var id: String {
-    code ?? UUID().uuidString
-  }
+  var id: String { code }
 }
 
 // MARK: - Location

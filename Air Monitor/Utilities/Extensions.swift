@@ -12,6 +12,14 @@ extension Array {
   func max<T: Comparable>(by kp: KeyPath<Element, T>) -> Element? {
     return self.max { $0[keyPath: kp] < $1[keyPath: kp] }
   }
+  
+  func sorted<T: Comparable>(by kp: KeyPath<Element, T>, comparator: (T, T) -> Bool) -> Self {
+    return self.sorted { comparator($0[keyPath: kp], $1[keyPath: kp]) }
+  }
+  
+  func sorted<T: Comparable>(by kp: KeyPath<Element, T>) -> Self {
+    return self.sorted(by: kp, comparator: <)
+  }
 }
 
 extension NumberFormatter {

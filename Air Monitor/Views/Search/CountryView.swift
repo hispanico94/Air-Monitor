@@ -41,7 +41,7 @@ final class CountryViewModel: ObservableObject {
               self?.errorMessage = "No results"
               return
           }
-          self?.countries = countries
+          self?.countries = countries.sorted(by: \.name)
           self?.errorMessage = ""
       })
       .store(in: &cancellables)
@@ -61,12 +61,8 @@ struct CountryView: View {
   var body: some View {
     NavigationView {
       List(viewModel.countries) { country in
-        if country.name != nil {
-          NavigationLink(destination: ZoneView(viewModel: .init(country: country), onLocationSelection: self.onLocationSelection)) {
-            Text(country.name!)
-          }
-        } else {
-          Text("No Name").foregroundColor(.red)
+        NavigationLink(destination: ZoneView(viewModel: .init(country: country), onLocationSelection: self.onLocationSelection)) {
+          Text(country.name)
         }
       }
       .navigationBarTitle("Countries")

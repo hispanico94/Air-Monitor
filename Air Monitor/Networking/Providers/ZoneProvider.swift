@@ -16,9 +16,7 @@ enum ZoneProvider {
       let path = "cities"
       var paramteter = ""
       
-      if let countryCode = country.code {
-        paramteter = "?country=\(countryCode)"
-      }
+      paramteter = "?country=\(country.code)"
       
       return HTTP.Request(
         method: .get,
