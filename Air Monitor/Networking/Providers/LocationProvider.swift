@@ -18,7 +18,7 @@ enum LocationProvider {
       
       switch parameter {
       case .left(let zone):
-        let urlParameter = zone.name.replacingOccurrences(of: " ", with: "+")
+        let urlParameter = zone.name.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         parameters = "?city=\(urlParameter)"
       case .right(let coordinate):
         parameters =

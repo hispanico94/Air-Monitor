@@ -28,7 +28,7 @@ enum MeasurementsProvider {
       
       switch location {
       case .left(let location):
-        let spacedReplacedName = location.name.replacingOccurrences(of: " ", with: "+")
+        let spacedReplacedName = location.name.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         parameters = "&location=\(spacedReplacedName)"
       case .right(let coordinate):
         parameters =
