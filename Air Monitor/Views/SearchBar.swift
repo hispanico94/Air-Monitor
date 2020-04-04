@@ -11,6 +11,7 @@ import SwiftUI
 struct SearchBar: UIViewRepresentable {
   
   @Binding var text: String
+  var placeholder: String?
   
   func makeCoordinator() -> Coordinator {
     return Coordinator(text: $text)
@@ -21,6 +22,7 @@ struct SearchBar: UIViewRepresentable {
     searchBar.delegate = context.coordinator
     searchBar.searchBarStyle = .default
     searchBar.autocapitalizationType = .none
+    searchBar.placeholder = placeholder
     return searchBar
   }
   
@@ -39,6 +41,21 @@ extension SearchBar {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
       text = searchText
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+      searchBar.endEditing(true)
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+      searchBar.setShowsCancelButton(true, animated: true)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+      text = ""
+      searchBar.text = ""
+      searchBar.endEditing(true)
+      searchBar.setShowsCancelButton(false, animated: true)
     }
   }
 }
