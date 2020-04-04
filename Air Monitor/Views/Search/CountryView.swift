@@ -50,6 +50,18 @@ final class CountryViewModel: ObservableObject {
 
 struct CountryView: View {
   @ObservedObject private var viewModel: CountryViewModel
+  @State private var searchText = ""
+  
+  private var filteredCountries: [Country] {
+    guard
+      searchText.isEmpty == false
+      else {
+        return viewModel.countries
+    }
+    return viewModel.countries
+      .filter { $0.name.lowercased().contains(searchText.lowercased()) }
+  }
+  
   private let onLocationSelection: (Location) -> Void
   
   
@@ -60,12 +72,15 @@ struct CountryView: View {
   
   var body: some View {
     NavigationView {
-      List(viewModel.countries) { country in
-        NavigationLink(destination: ZoneView(viewModel: .init(country: country), onLocationSelection: self.onLocationSelection)) {
-          Text(country.name)
+      VStack {
+        SearchBar(text: $searchText, placeholder: "Search")
+        List(filteredCountries) { country in
+          NavigationLink(destination: ZoneView(viewModel: .init(country: country), onLocationSelection: self.onLocationSelection)) {
+            Text(country.name)
+          }
         }
+        .navigationBarTitle("Countries")
       }
-      .navigationBarTitle("Countries")
     }
   }
 }
