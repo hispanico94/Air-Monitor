@@ -72,15 +72,16 @@ struct CountryView: View {
   
   var body: some View {
     NavigationView {
-      VStack {
+      VStack(spacing: 0) {
         SearchBar(text: $searchText, placeholder: "Search")
         List(filteredCountries) { country in
           NavigationLink(destination: ZoneView(viewModel: .init(country: country), onLocationSelection: self.onLocationSelection)) {
             Text(country.name)
           }
         }
-        .navigationBarTitle("Countries")
+        .gesture(DragGesture().onChanged { _ in UIApplication.shared.endEditing(true) })
       }
+      .navigationBarTitle("Countries", displayMode: .inline)
     }
   }
 }
