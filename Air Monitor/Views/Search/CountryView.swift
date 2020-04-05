@@ -12,8 +12,9 @@ import SwiftUI
 final class CountryViewModel: ObservableObject {
   private var cancellables = Set<AnyCancellable>()
   
-  @Published var countries = [Country]()
-  @Published var errorMessage = ""
+  @Published private(set) var countries = [Country]()
+  @Published var error: HTTP.Error?
+  @Published private(set) var isLoading = true
   
   init() {
     bindCountryList()
@@ -25,11 +26,12 @@ final class CountryViewModel: ObservableObject {
       .receive(on: DispatchQueue.main)
       .sink(
         receiveCompletion: { [weak self] completion in
+          self?.isLoading = false
           switch completion {
           case .finished:
             break
           case .failure(let error):
-            self?.errorMessage = error.localizedDescription
+            self?.error = error
           }
         },
         receiveValue: { [weak self] countries in
@@ -38,11 +40,10 @@ final class CountryViewModel: ObservableObject {
             countries.isEmpty == false
             else {
               self?.countries = []
-              self?.errorMessage = "No results"
               return
           }
           self?.countries = countries.sorted(by: \.name)
-          self?.errorMessage = ""
+          self?.error = nil
       })
       .store(in: &cancellables)
   }
@@ -74,12 +75,20 @@ struct CountryView: View {
     NavigationView {
       VStack(spacing: 0) {
         SearchBar(text: $searchText, placeholder: "Search")
-        List(filteredCountries) { country in
-          NavigationLink(destination: ZoneView(viewModel: .init(country: country), onLocationSelection: self.onLocationSelection)) {
-            Text(country.name)
+        
+        ZStack {
+          List(filteredCountries) { country in
+            NavigationLink(destination: ZoneView(viewModel: .init(country: country), onLocationSelection: self.onLocationSelection)) {
+              Text(country.name)
+            }
           }
+          .gesture(DragGesture().onChanged { _ in UIApplication.shared.endEditing(true) })
+          .alert(item: $viewModel.error) { error in
+              Alert(title: Text("Error"), message: Text(error.localizedDescription), dismissButton: .default(Text("Ok")))
+          }
+          
+          ActivityIndicator(isAnimating: viewModel.isLoading, style: .large)
         }
-        .gesture(DragGesture().onChanged { _ in UIApplication.shared.endEditing(true) })
       }
       .navigationBarTitle("Countries", displayMode: .inline)
     }

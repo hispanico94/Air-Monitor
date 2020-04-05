@@ -14,11 +14,12 @@ final class ZoneViewModel: ObservableObject {
   private let country: Country
   
   var title: String {
-    country.name
+    country.name.lowercased().capitalized
   }
   
-  @Published var zones = [Zone]()
-  @Published var errorMessage = ""
+  @Published private(set) var zones = [Zone]()
+  @Published var error: HTTP.Error?
+  @Published private(set) var isLoading = true
   
   init(country: Country) {
     self.country = country
@@ -31,11 +32,12 @@ final class ZoneViewModel: ObservableObject {
       .receive(on: DispatchQueue.main)
       .sink(
         receiveCompletion: { [weak self] completion in
+          self?.isLoading = false
           switch completion {
           case .finished:
             break
           case .failure(let error):
-            self?.errorMessage = error.localizedDescription
+            self?.error = error
           }
         },
         receiveValue: { [weak self] zones in
@@ -44,11 +46,10 @@ final class ZoneViewModel: ObservableObject {
             zones.isEmpty == false
             else {
               self?.zones = []
-              self?.errorMessage = "No results"
               return
           }
-          self?.zones = zones
-          self?.errorMessage = ""
+          self?.zones = zones.sorted(by: \.name)
+          self?.error = nil
       })
       .store(in: &cancellables)
   }
@@ -56,6 +57,19 @@ final class ZoneViewModel: ObservableObject {
 
 struct ZoneView: View {
   @ObservedObject private var viewModel: ZoneViewModel
+  @State private var searchText = ""
+  
+  private var filteredZones: [Zone] {
+    guard
+    searchText.isEmpty == false
+      else {
+        return viewModel.zones
+    }
+    
+    return viewModel.zones
+      .filter { $0.name.lowercased().contains(searchText.lowercased()) }
+  }
+  
   private let onLocationSelection: (Location) -> Void
   
   init(viewModel: ZoneViewModel, onLocationSelection: @escaping (Location) -> Void) {
@@ -64,18 +78,24 @@ struct ZoneView: View {
   }
   
   var body: some View {
-    Group {
-      if viewModel.errorMessage.isEmpty {
-        List(viewModel.zones) { zone in
+    VStack {
+      SearchBar(text: $searchText, placeholder: "Search")
+      
+      ZStack {
+        List(filteredZones) { zone in
           NavigationLink(destination: LocationView(viewModel: LocationViewModel(zone: zone), onLocationSelection: self.onLocationSelection)) {
             Text(zone.name.lowercased().capitalized)
           }
         }
-        .navigationBarTitle(viewModel.title)
-      } else {
-        Text(viewModel.errorMessage)
+        .gesture(DragGesture().onChanged { _ in UIApplication.shared.endEditing(true) })
+        .alert(item: $viewModel.error) { error in
+            Alert(title: Text("Error"), message: Text(error.localizedDescription), dismissButton: .default(Text("Ok")))
+        }
+        
+        ActivityIndicator(isAnimating: viewModel.isLoading, style: .large)
       }
     }
+    .navigationBarTitle(viewModel.title)
   }
 }
 
