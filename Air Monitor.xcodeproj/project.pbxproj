@@ -41,6 +41,7 @@
 		CFB6A94C240A6795002592CB /* MeasurementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB6A94B240A6795002592CB /* MeasurementsView.swift */; };
 		CFB6A94E240A67AB002592CB /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB6A94D240A67AB002592CB /* MapView.swift */; };
 		CFD991A823DDF057009765A6 /* DataModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD991A723DDF057009765A6 /* DataModels.swift */; };
+		CFE47A23243A45420003862F /* CurrentLocationIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE47A22243A45420003862F /* CurrentLocationIndexView.swift */; };
 		CFEB5A5323E375970097DE93 /* CountryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEB5A5223E375970097DE93 /* CountryProvider.swift */; };
 /* End PBXBuildFile section */
 
@@ -81,6 +82,7 @@
 		CFB6A94B240A6795002592CB /* MeasurementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementsView.swift; sourceTree = "<group>"; };
 		CFB6A94D240A67AB002592CB /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		CFD991A723DDF057009765A6 /* DataModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModels.swift; sourceTree = "<group>"; };
+		CFE47A22243A45420003862F /* CurrentLocationIndexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentLocationIndexView.swift; sourceTree = "<group>"; };
 		CFEB5A5223E375970097DE93 /* CountryProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -199,6 +201,7 @@
 				CF1E5CAD24261F07008C2449 /* EmptyListView.swift */,
 				CF01329824327B3E004115DD /* ActivityIndicator.swift */,
 				CF74D69B2434FD9D00815C3A /* SearchBar.swift */,
+				CFE47A22243A45420003862F /* CurrentLocationIndexView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -317,6 +320,7 @@
 				CF4B864B241CDB79008F5C7B /* CountryView.swift in Sources */,
 				CF94C21F23CB8D4700FBADE9 /* AppDelegate.swift in Sources */,
 				CFB6A94E240A67AB002592CB /* MapView.swift in Sources */,
+				CFE47A23243A45420003862F /* CurrentLocationIndexView.swift in Sources */,
 				CF17280423F7F543009C4A29 /* MeasurementsProvider.swift in Sources */,
 				CF7F75F323D35BB50049561A /* BarsView.swift in Sources */,
 				CFEB5A5323E375970097DE93 /* CountryProvider.swift in Sources */,
