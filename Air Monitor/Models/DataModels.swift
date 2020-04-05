@@ -62,7 +62,9 @@ struct Measurement: Decodable {
     case date
     case utc
   }
-  
+}
+
+extension Measurement {
   init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     
@@ -209,6 +211,23 @@ enum EAQI: Int {
   case moderate
   case fair
   case good
+  
+  var description: String {
+    switch self {
+    case .extremelyPoor:
+      return "Extremely Poor"
+    case .veryPoor:
+      return "Very Poor"
+    case .poor:
+      return "Poor"
+    case .moderate:
+      return "Moderate"
+    case .fair:
+      return "Fair"
+    case .good:
+      return "Good"
+    }
+  }
   
   var color: Color {
     switch self {
