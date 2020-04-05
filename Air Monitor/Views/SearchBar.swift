@@ -8,54 +8,33 @@
 
 import SwiftUI
 
-struct SearchBar: UIViewRepresentable {
-  
+struct SearchBar: View {
   @Binding var text: String
-  var placeholder: String?
+  var placeholder: String
   
-  func makeCoordinator() -> Coordinator {
-    return Coordinator(text: $text)
-  }
-  
-  func makeUIView(context: Context) -> UISearchBar {
-    let searchBar = UISearchBar()
-    searchBar.delegate = context.coordinator
-    searchBar.searchBarStyle = .default
-    searchBar.autocapitalizationType = .none
-    searchBar.placeholder = placeholder
-    return searchBar
-  }
-  
-  func updateUIView(_ uiView: UISearchBar, context: Context) {
-    uiView.text = text
-  }
-}
-
-extension SearchBar {
-  class Coordinator: NSObject, UISearchBarDelegate {
-    @Binding var text: String
-    
-    init(text: Binding<String>) {
-      _text = text
+  var body: some View {
+    HStack(alignment: .center) {
+      HStack {
+        Image(systemName: "magnifyingglass")
+        
+        TextField(placeholder, text: $text)
+          .foregroundColor(.primary)
+        
+        if !text.isEmpty {
+          Button(action: {
+            self.text = ""
+          }) {
+            Image(systemName: "xmark.circle.fill")
+          }
+        } else {
+          EmptyView()
+        }
+      }
+      .padding(.all, 8)
+      .foregroundColor(.secondary)
+      .background(Color(.secondarySystemBackground))
+      .cornerRadius(8)
     }
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-      text = searchText
-    }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-      searchBar.endEditing(true)
-    }
-    
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-      searchBar.setShowsCancelButton(true, animated: true)
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-      text = ""
-      searchBar.text = ""
-      searchBar.endEditing(true)
-      searchBar.setShowsCancelButton(false, animated: true)
-    }
+  .padding()
   }
 }
