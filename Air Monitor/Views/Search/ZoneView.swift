@@ -14,7 +14,7 @@ final class ZoneViewModel: ObservableObject {
   private let country: Country
   
   var title: String {
-    country.name ?? ""
+    country.name
   }
   
   @Published var zones = [Zone]()
