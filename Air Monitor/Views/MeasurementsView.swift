@@ -12,6 +12,12 @@ struct MeasurementsView: View {
   @ObservedObject private var viewModel = HomeViewModel()
   @State private var isSheetPresented = false
   
+  var emptyMessage: String {
+    viewModel.locationName.isEmpty
+      ? "No location selected"
+      : "No data available.\nPlease search another location"
+  }
+  
   var body: some View {
     UITableView.appearance().separatorStyle = .none
     
@@ -20,7 +26,7 @@ struct MeasurementsView: View {
         EmptyListView(
           data: viewModel.cells,
           emptyContent: {
-            Text(self.viewModel.loading ? "" : "No data available.\nPlease search another location")
+            Text(self.viewModel.loading ? "" : self.emptyMessage)
               .fontWeight(.medium)
               .multilineTextAlignment(.center)
               .foregroundColor(.secondary)
