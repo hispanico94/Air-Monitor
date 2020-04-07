@@ -9,31 +9,31 @@
 import SwiftUI
 
 class CurrentLocationIndexViewModel {
-  private var measurement: Measurement
+  private let data: CurrentLocationSummaryData
   
   var zoneName: String {
-    measurement.location.zone
+    data.zone
   }
   
   var countryName: String {
-    measurement.location.country
+    data.country
   }
   
   var latestMeasurementDate: String {
     DateFormatter.airParameterFormatter
-      .string(from: measurement.date)
+      .string(from: data.date)
   }
   
   var indexFromLatestMeasurements: String {
-    measurement.measurement.eaqi?.description ?? "N/A"
+    data.eaqi.description
   }
   
   var indexColorFromLatestMeasurements: Color {
-    measurement.measurement.eaqi?.color ?? Color(.label)
+    data.eaqi.color
   }
   
-  init(measurement: Measurement) {
-    self.measurement = measurement
+  init(data: CurrentLocationSummaryData) {
+    self.data = data
   }
 }
 
@@ -57,24 +57,17 @@ struct CurrentLocationIndexView: View {
     .padding(.all, 16)
     .background(Color(.secondarySystemBackground))
     .cornerRadius(16)
+    .shadow(radius: 3, y: 3)
+    .frame(maxWidth: .infinity)
   }
 }
 
 struct CurrentLocationIndexView_Previews: PreviewProvider {
-  private static let viewModel = CurrentLocationIndexViewModel(measurement: Measurement(
-    location: Location(
-      name: "Cassino",
-      country: "Italy",
-      zone: "Frosinone",
-      coordinate: Coordinate(
-        latitude: 41.49,
-        longitude: 13.83,
-        radius: nil)),
+  private static let viewModel = CurrentLocationIndexViewModel(data: CurrentLocationSummaryData(
+    zone: "Frosinone",
+    country: "Italy",
     date: Date(),
-    measurement: AirMeasurement(
-      parameter: .pm10,
-      value: 86,
-      unit: .microgramsPerCubicMeter)
+    eaqi: .moderate
     )
   )
   
@@ -87,5 +80,25 @@ struct CurrentLocationIndexView_Previews: PreviewProvider {
         .background(Color(.systemBackground))
         .environment(\.colorScheme, .dark)
     }
+  }
+}
+
+struct CurrentLocationSummaryData {
+  let zone: String
+  let country: String
+  let date: Date
+  let eaqi: EAQI
+}
+
+extension CurrentLocationSummaryData {
+  init?(from measurement: Measurement) {
+    guard
+      let eaqi = measurement.measurement.eaqi
+      else { return nil }
+    
+    self.zone = measurement.location.zone
+    self.country = measurement.location.country
+    self.date = measurement.date
+    self.eaqi = eaqi
   }
 }

@@ -23,8 +23,8 @@ struct ValueCell: View {
     .background(Color(.secondarySystemBackground))
     .cornerRadius(16)
     .padding(.horizontal, 8)
-    .shadow(radius: 5, y: 3)
-      .frame(minHeight: 300)
+    .shadow(radius: 3, y: 3)
+    .frame(minHeight: 300)
   }
 }
 

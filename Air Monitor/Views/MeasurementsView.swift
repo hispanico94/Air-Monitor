@@ -23,17 +23,24 @@ struct MeasurementsView: View {
     
     return NavigationView {
       ZStack {
-        EmptyListView(
-          data: viewModel.cells,
-          emptyContent: {
+        
+        Group {
+          if viewModel.cells.isEmpty == false {
+            List {
+              viewModel.summaryData
+                .map(CurrentLocationIndexViewModel.init(data:))
+                .map(CurrentLocationIndexView.init(viewModel:))
+              
+              ForEach(viewModel.cells, content: ValueCell.init(state:))
+            }
+          } else {
             Text(self.viewModel.loading ? "" : self.emptyMessage)
               .fontWeight(.medium)
               .multilineTextAlignment(.center)
               .foregroundColor(.secondary)
-        },
-          rowContent: ValueCell.init(state:)
-        )
-          .alert(item: $viewModel.error) { error in
+          }
+        }
+        .alert(item: $viewModel.error) { error in
             Alert(title: Text("Error"), message: Text(error.localizedDescription), dismissButton: .default(Text("Ok")))
         }
         

@@ -24,6 +24,23 @@ final class HomeViewModel: ObservableObject {
   @Published var error: HTTP.Error? = nil
   @Published private(set) var loading = false
   
+  var summaryData: CurrentLocationSummaryData? {
+    cells
+      .compactMap(\.dateAscendingMeasurements.last)
+      .sorted(by: \.date, comparator: >)
+      .reduce(into: [Measurement](), { partialResult, measurement in
+        if let mostRecentMeasurement = partialResult.first {
+          if measurement.date.isInTheSameDay(of: mostRecentMeasurement.date) {
+            partialResult.append(measurement)
+          }
+        } else {
+          partialResult.append(measurement)
+        }
+      })
+      .max(by: \.measurement.value)
+      .flatMap(CurrentLocationSummaryData.init(from:))
+  }
+  
   var locationName: String {
     location?.name ?? ""
   }

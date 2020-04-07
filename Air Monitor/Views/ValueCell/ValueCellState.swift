@@ -10,12 +10,13 @@ import Foundation
 import SwiftUI
 
 struct ValueCellState {
-  private let dateAscendingMeasurements: [Measurement]
+  let dateAscendingMeasurements: [Measurement]
   
   init?(measurements: [Measurement]) {
     guard measurements.isEmpty == false else { return nil }
     self.dateAscendingMeasurements = measurements
-      .sorted { $0.date < $1.date }
+      .map { updating($0) { $00.date = $00.date.toMidnight(in: TimeZone(identifier: "UTC")!) ?? $00.date } }
+      .sorted(by: \.date)
   }
   
   var currentMeasure: CurrentMeasure {
@@ -37,11 +38,8 @@ struct ValueCellState {
   }
   
   var bars: [Bar] {
-    let utc = TimeZone(identifier: "UTC")!
-    
     return dateAscendingMeasurements
       .lazy
-      .map { measurement -> Measurement in updating(measurement) { $0.date = $0.date.toMidnight(in: utc) ?? $0.date } }
       .reduce(into: [Date: [Measurement]](), { partialResult, measurement in
         partialResult[measurement.date, default: []].append(measurement)
       })
