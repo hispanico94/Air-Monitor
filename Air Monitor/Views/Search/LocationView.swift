@@ -94,7 +94,7 @@ struct LocationView: View {
         ActivityIndicator(isAnimating: viewModel.isLoading, style: .large)
       }
     }
-    .navigationBarTitle(viewModel.zone.name)
+    .navigationBarTitle(viewModel.title)
   }
 }
 
