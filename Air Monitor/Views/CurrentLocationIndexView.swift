@@ -48,7 +48,7 @@ struct CurrentLocationIndexView: View {
       Text("Last updated: \(viewModel.latestMeasurementDate)")
         .padding(.bottom)
       
-      Text("Current EAQI index:")
+      Text("Latest EAQI index:")
       
       Text(viewModel.indexFromLatestMeasurements)
         .font(.title)

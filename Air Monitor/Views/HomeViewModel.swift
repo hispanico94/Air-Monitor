@@ -37,7 +37,7 @@ final class HomeViewModel: ObservableObject {
           partialResult.append(measurement)
         }
       })
-      .max(by: \.measurement.value)
+      .min(by: { $0.measurement.eaqi?.rawValue ?? Int.min < $1.measurement.eaqi?.rawValue ?? Int.max })
       .flatMap(CurrentLocationSummaryData.init(from:))
   }
   
