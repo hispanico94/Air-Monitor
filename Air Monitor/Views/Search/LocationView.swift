@@ -23,10 +23,9 @@ final class LocationViewModel: ObservableObject {
   
   init(zone: Zone) {
     self.zone = zone
-    bindLocationList()
   }
   
-  private func bindLocationList() {
+  func fetchLocationsList() {
     ExecuteRequest.getLocations
       .run(with: .init(parameter: .left(zone)))
       .receive(on: DispatchQueue.main)
@@ -95,6 +94,7 @@ struct LocationView: View {
       }
     }
     .navigationBarTitle(viewModel.title)
+    .onAppear(perform: viewModel.fetchLocationsList)
   }
 }
 

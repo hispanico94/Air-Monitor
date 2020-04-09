@@ -23,10 +23,9 @@ final class ZoneViewModel: ObservableObject {
   
   init(country: Country) {
     self.country = country
-    bindZoneList()
   }
   
-  private func bindZoneList() {
+  func fetchZonesList() {
     ExecuteRequest.getZones
       .run(with: .init(country: country))
       .receive(on: DispatchQueue.main)
@@ -96,6 +95,7 @@ struct ZoneView: View {
       }
     }
     .navigationBarTitle(viewModel.title)
+    .onAppear(perform: viewModel.fetchZonesList)
   }
 }
 

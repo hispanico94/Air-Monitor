@@ -16,11 +16,7 @@ final class CountryViewModel: ObservableObject {
   @Published var error: HTTP.Error?
   @Published private(set) var isLoading = true
   
-  init() {
-    bindCountryList()
-  }
-  
-  private func bindCountryList() {
+  func fetchCountryList() {
     ExecuteRequest.getCountries
       .run(with: .init())
       .receive(on: DispatchQueue.main)
@@ -92,6 +88,7 @@ struct CountryView: View {
       }
       .navigationBarTitle("Countries", displayMode: .inline)
     }
+    .onAppear(perform: viewModel.fetchCountryList)
   }
 }
 
