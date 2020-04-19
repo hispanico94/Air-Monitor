@@ -1,5 +1,5 @@
 //
-//  HomeViewModel.swift
+//  MeasurementsViewModel.swift
 //  Air Monitor
 //
 //  Created by Paolo Rocca on 01/03/2020.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-final class HomeViewModel: ObservableObject {
+final class MeasurementsViewModel: ObservableObject {
   private var cancellables = Set<AnyCancellable>()
   private var locationSubject = PassthroughSubject<Location?, HTTP.Error>()
   private var location: Location? {

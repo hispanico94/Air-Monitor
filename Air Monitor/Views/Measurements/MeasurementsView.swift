@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct MeasurementsView: View {
-  @ObservedObject private var viewModel = HomeViewModel()
+  @ObservedObject private var viewModel = MeasurementsViewModel()
   @State private var isSheetPresented = false
   
   var emptyMessage: String {
