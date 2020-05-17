@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -36,6 +36,7 @@
 		CF94C23923CB9B0500FBADE9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF94C23823CB9B0500FBADE9 /* Extensions.swift */; };
 		CF94C23C23CB9B9900FBADE9 /* Bar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF94C23B23CB9B9900FBADE9 /* Bar.swift */; };
 		CFA0D558242FB96300F48B8A /* Free Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA0D557242FB96300F48B8A /* Free Functions.swift */; };
+		CFAEC66E247130F9002D0342 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = CFAEC66D247130F9002D0342 /* ComposableArchitecture */; };
 		CFB6A94C240A6795002592CB /* MeasurementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB6A94B240A6795002592CB /* MeasurementsView.swift */; };
 		CFD991A823DDF057009765A6 /* DataModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD991A723DDF057009765A6 /* DataModels.swift */; };
 		CFE47A23243A45420003862F /* CurrentLocationIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE47A22243A45420003862F /* CurrentLocationIndexView.swift */; };
@@ -85,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CFAEC66E247130F9002D0342 /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,6 +254,9 @@
 			dependencies = (
 			);
 			name = "Air Monitor";
+			packageProductDependencies = (
+				CFAEC66D247130F9002D0342 /* ComposableArchitecture */,
+			);
 			productName = "Air Monitor";
 			productReference = CF94C21B23CB8D4700FBADE9 /* Air Monitor.app */;
 			productType = "com.apple.product-type.application";
@@ -280,6 +285,9 @@
 				Base,
 			);
 			mainGroup = CF94C21223CB8D4700FBADE9;
+			packageReferences = (
+				CFAEC66C247130F9002D0342 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+			);
 			productRefGroup = CF94C21C23CB8D4700FBADE9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -530,6 +538,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CFAEC66C247130F9002D0342 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CFAEC66D247130F9002D0342 /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CFAEC66C247130F9002D0342 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = CF94C21323CB8D4700FBADE9 /* Project object */;
 }
