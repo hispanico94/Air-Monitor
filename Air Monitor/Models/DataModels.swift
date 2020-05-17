@@ -6,120 +6,117 @@
 //  Copyright © 2020 Paolo Rocca. All rights reserved.
 //
 
-import Foundation
-import CoreLocation
 import SwiftUI
+
+// MARK: -
+
+struct OpenAQIReponse<T: Decodable> {
+  let results: [T]
+}
+
+struct OpenAQIFailureResponse: Decodable {
+  let statusCode: Int
+  let error: String
+  let message: String
+}
 
 // MARK: - Country
 
-struct Country {
+struct Country: Equatable {
   let code: String
   let name: String
+  
+  struct Raw: Decodable {
+    let code: String?
+    let name: String?
+    
+    var toCountry: Country? {
+      zip(code, name)
+        .map { ($0, $1.lowercased().capitalized) }
+        .map(Country.init)
+    }
+  }
 }
 
-extension Country: Identifiable {
-  var id: String { code }
+//extension Country: Identifiable {
+//  var id: String { code }
+//}
+
+// MARK: - Zone
+
+struct Zone: Equatable {
+  let id: String
+  let name: String
+  
+  struct Raw: Decodable {
+    let name: String?
+    
+    var toZone: Zone? {
+      name
+        .map { ($0, $0.lowercased().capitalized) }
+        .map(Zone.init)
+    }
+  }
 }
 
 // MARK: - Location
 
-struct Location: Decodable {
+struct Location: Equatable {
+  let id: String
   let name: String
-  let country: String
-  let zone: String
-  let coordinate: Coordinate
-  
-  
-  enum CodingKeys: String, CodingKey {
-    case name = "location"
-    case country
-    case zone = "city"
-    case coordinate = "coordinates"
-  }
-}
+  let lastUpdated: Date
 
-extension Location: Identifiable {
-  var id: String { name }
+  struct Raw: Decodable {
+    let id: String?
+    let location: String?
+    let lastUpdated: Date?
+    
+    var toLocation: Location? {
+      zip(id, location, lastUpdated)
+        .map { ($0, $1.lowercased().capitalized, $2) }
+        .map(Location.init)
+    }
+  }
 }
 
 // MARK: - Measurement
 
-struct Measurement: Decodable {
-  var location: Location
-  var date: Date
-  var measurement: AirMeasurement
+struct Measurement: Equatable {
+  let date: Date
+  let value: MeasurementValue
   
-  enum CodingKeys: String, CodingKey {
-    case location
-    case coordinates
-    case country
-    case city
+  struct Raw: Decodable {
+    let parameter: String?
+    let value: Double?
+    let unit: String?
+    let date: DateContainer?
     
-    case parameter
-    case value
-    case unit
+    var toMeasurement: Measurement? {
+      guard
+        let airParameter = AirParameter(rawValue: parameter ?? ""),
+        let unit = MeasurementUnit(rawValue: unit ?? ""),
+        let value = value,
+        let date = date?.utc
+        else { return nil }
+      
+      let measurementValue = MeasurementValue(
+        parameter: airParameter,
+        value: value,
+        unit: unit
+      )
+      
+      return Measurement(date: date, value: measurementValue)
+    }
     
-    case date
-    case utc
+    struct DateContainer: Decodable {
+      let utc: Date?
+    }
   }
 }
 
-extension Measurement {
-  init(from decoder: Decoder) throws {
-    let container = try decoder.container(keyedBy: CodingKeys.self)
-    
-    let location = try container.decode(String.self, forKey: .location)
-    let coordinates = try container.decode(Coordinate.self, forKey: .coordinates)
-    let country = try container.decode(String.self, forKey: .country)
-    let city = try container.decode(String.self, forKey: .city)
-    self.location = Location(name: location, country: country, zone: city, coordinate: coordinates)
-    
-    let parameter = try container.decode(String.self, forKey: .parameter)
-    let value = try container.decode(Double.self, forKey: .value)
-    let unit = try container.decode(String.self, forKey: .unit)
-    
-    let airParameter = AirParameter(rawValue: parameter)!
-    let measurementUnit = MeasurementUnit(rawValue: unit)!
-    self.measurement = AirMeasurement(parameter: airParameter, value: value, unit: measurementUnit)
-    
-    let dateContainer = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .date)
-    let dateString = try dateContainer.decode(String.self, forKey: .utc)
-    self.date = ISO8601DateFormatter.openAqiDateFormatter.date(from: dateString)!
-  }
-}
+// MARK: - MeasurementValue
 
-// MARK: - Zone
-
-struct Zone: Decodable {
-  let id: String
-  let name: String
-  let countryCode: String
-  
-  enum CodingKeys: String, CodingKey {
-    case id = "name"
-    case name = "city"
-    case countryCode = "country"
-  }
-}
-
-extension Zone: Identifiable { }
-
-// MARK: - Coordinate
-
-struct Coordinate: Decodable {
-  let latitude: Double
-  let longitude: Double
-  let radius: Int?
-  
-  var clLocationCoordinate: CLLocationCoordinate2D {
-    CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-  }
-}
-
-
-// MARK: - AirMeasurement
-
-struct AirMeasurement {
+struct MeasurementValue: Equatable {
   let parameter: AirParameter
   private let internalValue: Double
   let unit: MeasurementUnit
