@@ -10,7 +10,7 @@ import SwiftUI
 
 // MARK: -
 
-struct OpenAQIReponse<T: Decodable> {
+struct OpenAQIReponse<T: Decodable>: Decodable {
   let results: [T]
 }
 
@@ -64,6 +64,7 @@ struct Zone: Equatable {
 struct Location: Equatable {
   let id: String
   let name: String
+  let formattedName: String
   let lastUpdated: Date
 
   struct Raw: Decodable {
@@ -73,7 +74,7 @@ struct Location: Equatable {
     
     var toLocation: Location? {
       zip(id, location, lastUpdated)
-        .map { ($0, $1.lowercased().capitalized, $2) }
+        .map { ($0, $1, $1.lowercased().capitalized, $2) }
         .map(Location.init)
     }
   }
