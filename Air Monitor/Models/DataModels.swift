@@ -83,7 +83,7 @@ struct Location: Equatable {
 // MARK: - Measurement
 
 struct Measurement: Equatable {
-  let date: Date
+  var date: Date
   let value: MeasurementValue
   
   struct Raw: Decodable {

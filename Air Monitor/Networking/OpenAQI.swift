@@ -1,6 +1,8 @@
 import ComposableArchitecture
 import Foundation
 
+// MARK: - Configuration
+
 private struct Configuration {
   var defaultHeaders = [
     "Accept": "application/json",
@@ -20,6 +22,7 @@ private struct Configuration {
 
 private let configuration = Configuration()
 
+// MARK: - Client
 
 struct OpenAQI {
   var getCountries: () -> Effect<[Country], Failure>
@@ -33,6 +36,8 @@ struct OpenAQI {
   }
 }
 
+// MARK: - Live
+
 extension OpenAQI {
   static let live: OpenAQI = .init(
     getCountries: defaultGetCountries,
@@ -42,6 +47,46 @@ extension OpenAQI {
   )
 }
 
+// MARK: - Mock
+
+extension OpenAQI {
+  static let mock: OpenAQI = .init(
+    getCountries: {
+      Effect(value: [
+        Country(code: "IT", name: "Italy"),
+        Country(code: "ES", name: "Spain"),
+        Country(code: "FR", name: "France"),
+        Country(code: "DE", name: "Germany")
+      ])
+  },
+    getZones: { _ in
+      Effect(value: [
+        Zone(id: "Frosinone", name: "Frosinone"),
+        Zone(id: "Roma", name: "Roma"),
+        Zone(id: "Perugia", name: "Perugia"),
+        Zone(id: "Siena", name: "Siena")
+      ])
+  },
+    getLocations: { _ in
+      Effect(value: [
+        Location(id: "IT1", name: "Cassino", formattedName: "Cassino", lastUpdated: Date()),
+        Location(id: "IT2", name: "Frascati", formattedName: "Frascati", lastUpdated: Date()),
+        Location(id: "IT3", name: "Foligno", formattedName: "Foligno", lastUpdated: Date()),
+        Location(id: "IT4", name: "Pienza", formattedName: "Pienza", lastUpdated: Date())
+      ])
+  },
+    getMeasurements: { _, _, _, _ in
+      Effect(value: [
+        Measurement(date: Date(), value: .init(parameter: .pm10, value: 41, unit: .microgramsPerCubicMeter)),
+        Measurement(date: Date().addingTimeInterval(-60*60*24), value: .init(parameter: .pm10, value: 32, unit: .microgramsPerCubicMeter)),
+        Measurement(date: Date().addingTimeInterval(-60*60*24*2), value: .init(parameter: .pm10, value: 12, unit: .microgramsPerCubicMeter)),
+        Measurement(date: Date().addingTimeInterval(-60*60*24*3), value: .init(parameter: .pm10, value: 9, unit: .microgramsPerCubicMeter))
+      ])
+  }
+  )
+}
+
+// MARK: - Live implementations
 
 private func defaultGetCountries() -> Effect<[Country], OpenAQI.Failure> {
   let fullPath = configuration.rootURL.appendingPathComponent("countries", isDirectory: false)

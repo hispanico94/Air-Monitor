@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-struct ValueCellState {
+struct ValueCellState: Equatable {
   let dateAscendingMeasurements: [Measurement]
   
   init?(measurements: [Measurement]) {
@@ -44,14 +44,14 @@ struct ValueCellState {
         partialResult[measurement.date, default: []].append(measurement)
       })
       .map({ _, measurements -> Measurement in
-        measurements.max(by: \.measurement.value)!
+        measurements.max(by: \.value.value)!
       })
       .sorted { $0.date < $1.date }
       .map { measurement -> Bar in
           Bar(
             id: UUID(),
-            value: measurement.measurement.value,
-            color: measurement.measurement.eaqi?.color ?? .gray
+            value: measurement.value.value,
+            color: measurement.value.eaqi?.color ?? .gray
           )
       }
   }
@@ -63,7 +63,7 @@ extension ValueCellState: Identifiable {
   }
 }
 
-struct CurrentMeasure {
+struct CurrentMeasure: Equatable {
   let name: String
   let value: String
   let unit: String
@@ -74,13 +74,13 @@ struct CurrentMeasure {
 extension CurrentMeasure {
   init(from measurement: Measurement) {
     
-    self.name = measurement.measurement.parameter.name
+    self.name = measurement.value.parameter.name
     self.value = NumberFormatter
       .singleDecimal
-      .string(from: measurement.measurement.value as NSNumber)!
+      .string(from: measurement.value.value as NSNumber)!
     
-    self.unit = measurement.measurement.unit.rawValue
-    self.riskColor = measurement.measurement.eaqi?.color ?? .gray
+    self.unit = measurement.value.unit.rawValue
+    self.riskColor = measurement.value.eaqi?.color ?? .gray
     self.date = DateFormatter.airParameterFormatter.string(from: measurement.date)
   }
 }

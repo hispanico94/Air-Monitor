@@ -12,13 +12,9 @@
 		CF17280623F7FEC6009C4A29 /* Either.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF17280523F7FEC6009C4A29 /* Either.swift */; };
 		CF18DF3C23F8397C00EFE48B /* InformationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF18DF3B23F8397C00EFE48B /* InformationsView.swift */; };
 		CF18DF3E23F83D6800EFE48B /* ValueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF18DF3D23F83D6800EFE48B /* ValueCell.swift */; };
-		CF4B864B241CDB79008F5C7B /* CountryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4B864A241CDB79008F5C7B /* CountryView.swift */; };
-		CF4B864E241CE226008F5C7B /* ZoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4B864D241CE226008F5C7B /* ZoneView.swift */; };
-		CF676D35241E2A4A00AC4997 /* LocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF676D34241E2A4A00AC4997 /* LocationView.swift */; };
 		CF74D69C2434FD9D00815C3A /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF74D69B2434FD9D00815C3A /* SearchBar.swift */; };
 		CF7F75F323D35BB50049561A /* BarsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7F75F223D35BB50049561A /* BarsView.swift */; };
 		CF7F75F523D35C5E0049561A /* VerticalIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7F75F423D35C5E0049561A /* VerticalIndexView.swift */; };
-		CF843DE3240C116200C0F17E /* MeasurementsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF843DE2240C116200C0F17E /* MeasurementsViewModel.swift */; };
 		CF843DE5240C19B100C0F17E /* ValueCellState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF843DE4240C19B100C0F17E /* ValueCellState.swift */; };
 		CF94C21F23CB8D4700FBADE9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF94C21E23CB8D4700FBADE9 /* AppDelegate.swift */; };
 		CF94C22123CB8D4700FBADE9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF94C22023CB8D4700FBADE9 /* SceneDelegate.swift */; };
@@ -43,13 +39,9 @@
 		CF17280523F7FEC6009C4A29 /* Either.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Either.swift; sourceTree = "<group>"; };
 		CF18DF3B23F8397C00EFE48B /* InformationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationsView.swift; sourceTree = "<group>"; };
 		CF18DF3D23F83D6800EFE48B /* ValueCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueCell.swift; sourceTree = "<group>"; };
-		CF4B864A241CDB79008F5C7B /* CountryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryView.swift; sourceTree = "<group>"; };
-		CF4B864D241CE226008F5C7B /* ZoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoneView.swift; sourceTree = "<group>"; };
-		CF676D34241E2A4A00AC4997 /* LocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationView.swift; sourceTree = "<group>"; };
 		CF74D69B2434FD9D00815C3A /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		CF7F75F223D35BB50049561A /* BarsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarsView.swift; sourceTree = "<group>"; };
 		CF7F75F423D35C5E0049561A /* VerticalIndexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalIndexView.swift; sourceTree = "<group>"; };
-		CF843DE2240C116200C0F17E /* MeasurementsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementsViewModel.swift; sourceTree = "<group>"; };
 		CF843DE4240C19B100C0F17E /* ValueCellState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueCellState.swift; sourceTree = "<group>"; };
 		CF94C21B23CB8D4700FBADE9 /* Air Monitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Air Monitor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF94C21E23CB8D4700FBADE9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -84,7 +76,6 @@
 		CF40D737244CB48700C299D0 /* Measurements */ = {
 			isa = PBXGroup;
 			children = (
-				CF843DE2240C116200C0F17E /* MeasurementsViewModel.swift */,
 				CFB6A94B240A6795002592CB /* MeasurementsView.swift */,
 				CF7F75EF23D35B670049561A /* ValueCell */,
 				CFE47A22243A45420003862F /* CurrentLocationIndexView.swift */,
@@ -99,16 +90,6 @@
 				CFAEC671247135DF002D0342 /* OpenAQI.swift */,
 			);
 			path = Networking;
-			sourceTree = "<group>";
-		};
-		CF4B864C241CE20B008F5C7B /* Search */ = {
-			isa = PBXGroup;
-			children = (
-				CF4B864A241CDB79008F5C7B /* CountryView.swift */,
-				CF4B864D241CE226008F5C7B /* ZoneView.swift */,
-				CF676D34241E2A4A00AC4997 /* LocationView.swift */,
-			);
-			path = Search;
 			sourceTree = "<group>";
 		};
 		CF7F75EF23D35B670049561A /* ValueCell */ = {
@@ -178,7 +159,6 @@
 			isa = PBXGroup;
 			children = (
 				CF40D737244CB48700C299D0 /* Measurements */,
-				CF4B864C241CE20B008F5C7B /* Search */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -301,7 +281,6 @@
 				CF17280623F7FEC6009C4A29 /* Either.swift in Sources */,
 				CF16361C23EF2DDC00AD051B /* AppError.swift in Sources */,
 				CF94C23C23CB9B9900FBADE9 /* Bar.swift in Sources */,
-				CF4B864B241CDB79008F5C7B /* CountryView.swift in Sources */,
 				CF94C21F23CB8D4700FBADE9 /* AppDelegate.swift in Sources */,
 				CFE47A23243A45420003862F /* CurrentLocationIndexView.swift in Sources */,
 				CF7F75F323D35BB50049561A /* BarsView.swift in Sources */,
@@ -313,12 +292,9 @@
 				CFAEC672247135DF002D0342 /* OpenAQI.swift in Sources */,
 				CF18DF3E23F83D6800EFE48B /* ValueCell.swift in Sources */,
 				CFB6A94C240A6795002592CB /* MeasurementsView.swift in Sources */,
-				CF843DE3240C116200C0F17E /* MeasurementsViewModel.swift in Sources */,
 				CF01329924327B3E004115DD /* ActivityIndicator.swift in Sources */,
-				CF4B864E241CE226008F5C7B /* ZoneView.swift in Sources */,
 				CF94C23623CB953D00FBADE9 /* BarChartView.swift in Sources */,
 				CF18DF3C23F8397C00EFE48B /* InformationsView.swift in Sources */,
-				CF676D35241E2A4A00AC4997 /* LocationView.swift in Sources */,
 				CF7F75F523D35C5E0049561A /* VerticalIndexView.swift in Sources */,
 				CFD991A823DDF057009765A6 /* DataModels.swift in Sources */,
 			);
