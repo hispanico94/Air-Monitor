@@ -12,6 +12,7 @@
 		CF17280623F7FEC6009C4A29 /* Either.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF17280523F7FEC6009C4A29 /* Either.swift */; };
 		CF18DF3C23F8397C00EFE48B /* InformationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF18DF3B23F8397C00EFE48B /* InformationsView.swift */; };
 		CF18DF3E23F83D6800EFE48B /* ValueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF18DF3D23F83D6800EFE48B /* ValueCell.swift */; };
+		CF52B0A3247834D00003EF28 /* SearchEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF52B0A2247834D00003EF28 /* SearchEntities.swift */; };
 		CF74D69C2434FD9D00815C3A /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF74D69B2434FD9D00815C3A /* SearchBar.swift */; };
 		CF7F75F323D35BB50049561A /* BarsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7F75F223D35BB50049561A /* BarsView.swift */; };
 		CF7F75F523D35C5E0049561A /* VerticalIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7F75F423D35C5E0049561A /* VerticalIndexView.swift */; };
@@ -24,6 +25,7 @@
 		CF94C23623CB953D00FBADE9 /* BarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF94C23523CB953D00FBADE9 /* BarChartView.swift */; };
 		CF94C23923CB9B0500FBADE9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF94C23823CB9B0500FBADE9 /* Extensions.swift */; };
 		CF94C23C23CB9B9900FBADE9 /* Bar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF94C23B23CB9B9900FBADE9 /* Bar.swift */; };
+		CF9E5442247FC1C0008F9369 /* ErrorViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9E5441247FC1C0008F9369 /* ErrorViewState.swift */; };
 		CFA0D558242FB96300F48B8A /* Free Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA0D557242FB96300F48B8A /* Free Functions.swift */; };
 		CFAEC66E247130F9002D0342 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = CFAEC66D247130F9002D0342 /* ComposableArchitecture */; };
 		CFAEC6702471319E002D0342 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFAEC66F2471319E002D0342 /* AppState.swift */; };
@@ -31,6 +33,7 @@
 		CFB6A94C240A6795002592CB /* MeasurementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB6A94B240A6795002592CB /* MeasurementsView.swift */; };
 		CFD991A823DDF057009765A6 /* DataModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD991A723DDF057009765A6 /* DataModels.swift */; };
 		CFE47A23243A45420003862F /* CurrentLocationIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE47A22243A45420003862F /* CurrentLocationIndexView.swift */; };
+		CFF26546247CEA90002F3FF5 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFF26545247CEA90002F3FF5 /* SearchView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +42,7 @@
 		CF17280523F7FEC6009C4A29 /* Either.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Either.swift; sourceTree = "<group>"; };
 		CF18DF3B23F8397C00EFE48B /* InformationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationsView.swift; sourceTree = "<group>"; };
 		CF18DF3D23F83D6800EFE48B /* ValueCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueCell.swift; sourceTree = "<group>"; };
+		CF52B0A2247834D00003EF28 /* SearchEntities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchEntities.swift; sourceTree = "<group>"; };
 		CF74D69B2434FD9D00815C3A /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		CF7F75F223D35BB50049561A /* BarsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarsView.swift; sourceTree = "<group>"; };
 		CF7F75F423D35C5E0049561A /* VerticalIndexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalIndexView.swift; sourceTree = "<group>"; };
@@ -53,12 +57,14 @@
 		CF94C23523CB953D00FBADE9 /* BarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartView.swift; sourceTree = "<group>"; };
 		CF94C23823CB9B0500FBADE9 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		CF94C23B23CB9B9900FBADE9 /* Bar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bar.swift; sourceTree = "<group>"; };
+		CF9E5441247FC1C0008F9369 /* ErrorViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorViewState.swift; sourceTree = "<group>"; };
 		CFA0D557242FB96300F48B8A /* Free Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Free Functions.swift"; sourceTree = "<group>"; };
 		CFAEC66F2471319E002D0342 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		CFAEC671247135DF002D0342 /* OpenAQI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAQI.swift; sourceTree = "<group>"; };
 		CFB6A94B240A6795002592CB /* MeasurementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementsView.swift; sourceTree = "<group>"; };
 		CFD991A723DDF057009765A6 /* DataModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModels.swift; sourceTree = "<group>"; };
 		CFE47A22243A45420003862F /* CurrentLocationIndexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentLocationIndexView.swift; sourceTree = "<group>"; };
+		CFF26545247CEA90002F3FF5 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +96,15 @@
 				CFAEC671247135DF002D0342 /* OpenAQI.swift */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		CF52B0A12478310A0003EF28 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				CF52B0A2247834D00003EF28 /* SearchEntities.swift */,
+				CFF26545247CEA90002F3FF5 /* SearchView.swift */,
+			);
+			path = Search;
 			sourceTree = "<group>";
 		};
 		CF7F75EF23D35B670049561A /* ValueCell */ = {
@@ -158,6 +173,7 @@
 		CF94C23223CB932900FBADE9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				CF52B0A12478310A0003EF28 /* Search */,
 				CF40D737244CB48700C299D0 /* Measurements */,
 			);
 			path = Views;
@@ -180,6 +196,7 @@
 				CF94C23B23CB9B9900FBADE9 /* Bar.swift */,
 				CF16361B23EF2DDC00AD051B /* AppError.swift */,
 				CFAEC66F2471319E002D0342 /* AppState.swift */,
+				CF9E5441247FC1C0008F9369 /* ErrorViewState.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -286,11 +303,14 @@
 				CF7F75F323D35BB50049561A /* BarsView.swift in Sources */,
 				CFAEC6702471319E002D0342 /* AppState.swift in Sources */,
 				CF843DE5240C19B100C0F17E /* ValueCellState.swift in Sources */,
+				CF52B0A3247834D00003EF28 /* SearchEntities.swift in Sources */,
+				CFF26546247CEA90002F3FF5 /* SearchView.swift in Sources */,
 				CF94C22123CB8D4700FBADE9 /* SceneDelegate.swift in Sources */,
 				CFA0D558242FB96300F48B8A /* Free Functions.swift in Sources */,
 				CF74D69C2434FD9D00815C3A /* SearchBar.swift in Sources */,
 				CFAEC672247135DF002D0342 /* OpenAQI.swift in Sources */,
 				CF18DF3E23F83D6800EFE48B /* ValueCell.swift in Sources */,
+				CF9E5442247FC1C0008F9369 /* ErrorViewState.swift in Sources */,
 				CFB6A94C240A6795002592CB /* MeasurementsView.swift in Sources */,
 				CF01329924327B3E004115DD /* ActivityIndicator.swift in Sources */,
 				CF94C23623CB953D00FBADE9 /* BarChartView.swift in Sources */,
