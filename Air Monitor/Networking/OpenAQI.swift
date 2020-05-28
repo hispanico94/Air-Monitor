@@ -11,12 +11,12 @@ private struct Configuration {
   
   var defaultQueryItem = URLQueryItem(name: "limit", value: "10000")
   
-  var rootURL = URL(string: "https://api.openaq.org/v1/")!
+  var rootURLString = "https://api.openaq.org/v1/"
   
   var validStatusCodes = (200 ..< 300)
   
   var defaultDecoder = updating(JSONDecoder()) {
-    $0.dateDecodingStrategy = .iso8601
+    $0.dateDecodingStrategy = .formatted(.iso8601Full)
   }
 }
 
@@ -33,6 +33,15 @@ struct OpenAQI {
   enum Failure: Error {
     case badFormattedUrl
     case responseError(Error)
+    
+    var localizedDescription: String {
+      switch self {
+      case .badFormattedUrl:
+        return "The request url was badly formatted"
+      case .responseError(let error):
+        return error.localizedDescription
+      }
+    }
   }
 }
 
@@ -89,11 +98,11 @@ extension OpenAQI {
 // MARK: - Live implementations
 
 private func defaultGetCountries() -> Effect<[Country], OpenAQI.Failure> {
-  let fullPath = configuration.rootURL.appendingPathComponent("countries", isDirectory: false)
-  var fullUrl = URLComponents(url: fullPath, resolvingAgainstBaseURL: false)
-  fullUrl?.queryItems?.append(configuration.defaultQueryItem)
+  let fullPath = configuration.rootURLString.appending("countries")
+  var urlComponents = URLComponents(string: fullPath)
+  urlComponents?.queryItems = [configuration.defaultQueryItem]
   
-  guard let url = fullUrl?.url else { return .init(error: .badFormattedUrl) }
+  guard let url = urlComponents?.url else { return .init(error: .badFormattedUrl) }
   
   return URLSession.shared
     .dataTaskPublisher(for: url)
@@ -106,14 +115,14 @@ private func defaultGetCountries() -> Effect<[Country], OpenAQI.Failure> {
 }
 
 private func defaultGetZones(_ country: Country) -> Effect<[Zone], OpenAQI.Failure> {
-  let fullPath = configuration.rootURL.appendingPathComponent("cities", isDirectory: false)
-  var fullUrl = URLComponents(url: fullPath, resolvingAgainstBaseURL: false)
-  fullUrl?.queryItems?.append(contentsOf: [
+  let fullPath = configuration.rootURLString.appending("cities")
+  var urlComponents = URLComponents(string: fullPath)
+  urlComponents?.queryItems = [
     URLQueryItem(name: "country", value: "\(country.code)"),
     configuration.defaultQueryItem
-  ])
+  ]
   
-  guard let url = fullUrl?.url else { return .init(error: .badFormattedUrl) }
+  guard let url = urlComponents?.url else { return .init(error: .badFormattedUrl) }
   
   return URLSession.shared
     .dataTaskPublisher(for: url)
@@ -126,14 +135,14 @@ private func defaultGetZones(_ country: Country) -> Effect<[Zone], OpenAQI.Failu
 }
 
 private func defaultGetLocations(_ zone: Zone) -> Effect<[Location], OpenAQI.Failure> {
-  let fullPath = configuration.rootURL.appendingPathComponent("locations", isDirectory: false)
-  var fullUrl = URLComponents(url: fullPath, resolvingAgainstBaseURL: false)
-  fullUrl?.queryItems?.append(contentsOf: [
+  let fullPath = configuration.rootURLString.appending("locations")
+  var urlComponents = URLComponents(string: fullPath)
+  urlComponents?.queryItems = [
     URLQueryItem(name: "city", value: "\(zone.id)"),
     configuration.defaultQueryItem
-  ])
+  ]
   
-  guard let url = fullUrl?.url else { return .init(error: .badFormattedUrl) }
+  guard let url = urlComponents?.url else { return .init(error: .badFormattedUrl) }
   
   return URLSession.shared
     .dataTaskPublisher(for: url)
@@ -145,22 +154,22 @@ private func defaultGetLocations(_ zone: Zone) -> Effect<[Location], OpenAQI.Fai
     .eraseToEffect()
 }
 
-private func defaultGetMeasurements(_ location: Location, _ initialDate: Date, _ lastDate: Date, _ locale: Locale) -> Effect<[Measurement], OpenAQI.Failure> {
+private func defaultGetMeasurements(_ location: Location, _ initialDate: Date, _ finalDate: Date, _ locale: Locale) -> Effect<[Measurement], OpenAQI.Failure> {
   
   let formatter = ISO8601DateFormatter()
   formatter.timeZone = locale.calendar.timeZone
   formatter.formatOptions = .withFullDate
   
-  let fullPath = configuration.rootURL.appendingPathComponent("measurements", isDirectory: false)
-  var fullUrl = URLComponents(url: fullPath, resolvingAgainstBaseURL: false)
-  fullUrl?.queryItems?.append(contentsOf: [
+  let fullPath = configuration.rootURLString.appending("measurements")
+  var urlComponents = URLComponents(string: fullPath)
+  urlComponents?.queryItems = [
     URLQueryItem(name: "location", value: "\(location.name)"),
     URLQueryItem(name: "date_from", value: formatter.string(from: initialDate)),
-    URLQueryItem(name: "date_to", value: formatter.string(from: lastDate)),
+    URLQueryItem(name: "date_to", value: formatter.string(from: finalDate)),
     configuration.defaultQueryItem
-  ])
+  ]
   
-  guard let url = fullUrl?.url else { return .init(error: .badFormattedUrl) }
+  guard let url = urlComponents?.url else { return .init(error: .badFormattedUrl) }
   
   return URLSession.shared
     .dataTaskPublisher(for: url)
