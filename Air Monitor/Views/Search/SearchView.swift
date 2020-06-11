@@ -10,49 +10,52 @@ import ComposableArchitecture
 import SwiftUI
 
 struct SearchView: View {
-  let store: Store<SearchState, SearchAction>
+  let store: Store<SearchMeasurementsState, SearchAction>
   
   var body: some View {
     
     WithViewStore(self.store) { viewStore in
-      ZStack {
-        List {
-          if viewStore.state.countries.isEmpty == false {
-            self.makeCountrySection(
-              countries: viewStore.state.countries,
-              selectedCountry: viewStore.state.selectedCountry,
-              countryTapped: { viewStore.send(.countrySelected($0)) })
+      NavigationView {
+        ZStack {
+          List {
+            if viewStore.state.search.countries.isEmpty == false {
+              self.makeCountrySection(
+                countries: viewStore.state.search.countries,
+                selectedCountry: viewStore.state.search.selectedCountry,
+                countryTapped: { viewStore.send(.countrySelected($0)) })
+            }
+            
+            if viewStore.state.search.zones.isEmpty == false {
+              self.makeZoneSection(
+                zones: viewStore.state.search.zones,
+                selectedZone: viewStore.state.search.selectedZone,
+                zoneTapped: { viewStore.send(.zoneSelected($0)) })
+            }
+            
+            if viewStore.state.search.locations.isEmpty == false {
+              self.makeLocationSection(
+                locations: viewStore.state.search.locations,
+                selectedLocation: viewStore.state.selectedLocation,
+                locationTapped: { viewStore.send(.locationSelected($0)) })
+            }
+          }
+          .listStyle(GroupedListStyle())
+          .alert(item: viewStore.binding(
+            get: { $0.search.errorMessage.map(ErrorViewState.init(description:)) },
+            send: .errorAlertDismissed)) {
+              Alert.init(title: Text($0.title), message: Text($0.description))
           }
           
-          if viewStore.state.zones.isEmpty == false {
-            self.makeZoneSection(
-              zones: viewStore.state.zones,
-              selectedZone: viewStore.state.selectedZone,
-              zoneTapped: { viewStore.send(.zoneSelected($0)) })
-          }
-          
-          if viewStore.state.locations.isEmpty == false {
-            self.makeLocationSection(
-              locations: viewStore.state.locations,
-              selectedLocation: viewStore.state.selectedLocation,
-              locationTapped: { viewStore.send(.locationSelected($0)) })
+          if viewStore.state.search.isLoading {
+            ActivityIndicator(
+              isAnimating: true,
+              style: .large
+            )
           }
         }
-        .listStyle(GroupedListStyle())
-        .alert(item: viewStore.binding(
-          get: { $0.errorMessage.map(ErrorViewState.init(description:)) },
-          send: .errorAlertDismissed)) {
-            Alert.init(title: Text($0.title), message: Text($0.description))
-        }
-        
-        if viewStore.state.isLoading {
-          ActivityIndicator(
-            isAnimating: true,
-            style: .large
-          )
-        }
+        .onAppear { viewStore.send(.viewAppeared) }
+        .navigationBarTitle("Search", displayMode: .inline)
       }
-      .onAppear { viewStore.send(.viewAppeared) }
     }
   }
   
@@ -138,7 +141,7 @@ struct SearchView: View {
 struct SearchView_Previews: PreviewProvider {
   static var previews: some View {
     SearchView(store: .init(
-      initialState: SearchState(),
+      initialState: SearchMeasurementsState(),
       reducer: searchReducer.debug(),
       environment: SearchEnvironment()
       ))

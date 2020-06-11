@@ -25,8 +25,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     // Create the SwiftUI view that provides the window contents.
     let contentView = MeasurementsView(store: .init(
-      initialState: AppState(),
-      reducer: appReducer.debug(),
+      initialState: MeasurementsState(),
+      reducer: measurementsReducer.debug(),
       environment: .init(
         openAQIClient: .live,
         mainQueue: .init(DispatchQueue.main),

@@ -10,7 +10,7 @@ import ComposableArchitecture
 import SwiftUI
 
 struct MeasurementsView: View {
-  let store: Store<AppState, AppAction>
+  let store: Store<MeasurementsState, MeasurementsAction>
   
   var body: some View {
     UITableView.appearance().separatorStyle = .none
@@ -32,10 +32,14 @@ struct MeasurementsView: View {
         .alert(
           isPresented: viewStore.binding(
             get: { $0.errorAlertMessage != nil },
-            send: { _ in AppAction.errorAlertDismissed }
+            send: { _ in MeasurementsAction.errorAlertDismissed }
           ),
           content: {
-            Alert(title: Text("Error"), message: Text(viewStore.errorAlertMessage ?? ""), dismissButton: .default(Text("Ok")))
+            Alert(
+              title: Text("Error"),
+              message: Text(viewStore.errorAlertMessage ?? ""),
+              dismissButton: .default(Text("Ok"))
+            )
         })
           .navigationBarTitle(viewStore.selectedLocation?.formattedName ?? "No Location")
           .navigationBarItems(trailing: Button(
@@ -49,7 +53,14 @@ struct MeasurementsView: View {
           })
         )
       }
-      .sheet(isPresented: .constant(viewStore.isLocationSelectionModalShown), content: { Text("LMAO") } )
+      .sheet(
+        isPresented: .constant(viewStore.isLocationSelectionModalShown),
+        content: {
+          SearchView(store: self.store.scope(
+            state: { $0.searchMeasurements },
+            action: MeasurementsAction.search
+          ))
+      })
     }
     .tabItem {
       Image(systemName: "wind")
@@ -61,7 +72,7 @@ struct MeasurementsView: View {
 struct MeasurementsView_Previews: PreviewProvider {
   static var previews: some View {
     MeasurementsView(store: .init(
-      initialState: AppState(
+      initialState: MeasurementsState(
         measurements: [
           Measurement(date: Date(), value: .init(parameter: .pm10, value: 41, unit: .microgramsPerCubicMeter)),
           Measurement(date: Date().addingTimeInterval(-60*60*24), value: .init(parameter: .pm10, value: 32, unit: .microgramsPerCubicMeter)),
@@ -70,7 +81,7 @@ struct MeasurementsView_Previews: PreviewProvider {
         ],
         selectedLocation: Location(id: "IT1", name: "Cassino", formattedName: "Cassino", lastUpdated: Date())
       ),
-      reducer: appReducer.debug(),
+      reducer: measurementsReducer.debug(),
       environment: .init(
         openAQIClient: .live,
         mainQueue: .init(DispatchQueue.main),

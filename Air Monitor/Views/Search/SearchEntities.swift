@@ -9,15 +9,19 @@
 import ComposableArchitecture
 import Foundation
 
+struct SearchMeasurementsState: Equatable {
+  var measurements: [Measurement] = []
+  var selectedLocation: Location? = nil
+  var search: SearchState = .init()
+}
+
 struct SearchState: Equatable {
   var countries: [Country] = []
   var zones: [Zone] = []
   var locations: [Location] = []
-  var measurements: [Measurement] = []
   
   var selectedCountry: Country? = nil
   var selectedZone: Zone? = nil
-  var selectedLocation: Location? = nil
   
   var errorMessage: String? = nil
   var isLoading: Bool = false
@@ -35,6 +39,7 @@ enum SearchAction {
   
   case viewAppeared
   case errorAlertDismissed
+  case searchCompleted
 }
 
 struct SearchEnvironment {
@@ -45,55 +50,56 @@ struct SearchEnvironment {
   var locale: Locale = .init(identifier: "it_IT")
 }
 
-let searchReducer = Reducer<SearchState, SearchAction, SearchEnvironment> { state, action, environment in
+let searchReducer = Reducer<SearchMeasurementsState, SearchAction, SearchEnvironment> { state, action, environment in
   switch action {
   case .countriesResponse(.success(let countries)):
-    state.isLoading = false
+    state.search.isLoading = false
     if countries.isEmpty {
-      state.errorMessage = "No results!"
+      state.search.errorMessage = "No results"
     } else {
-      state.countries = countries
+      state.search.countries = countries.sorted(by: \.name)
     }
     return .none
     
   case .zonesResponse(.success(let zones)):
-    state.isLoading = false
+    state.search.isLoading = false
     if zones.isEmpty {
-      state.errorMessage = "No results!"
+      state.search.errorMessage = "No results"
     } else {
-      state.zones = zones
+      state.search.zones = zones.sorted(by: \.name)
     }
     return .none
     
   case .locationsResponse(.success(let locations)):
-    state.isLoading = false
+    state.search.isLoading = false
     if locations.isEmpty {
-      state.errorMessage = "No results!"
+      state.search.errorMessage = "No results"
     } else {
-      state.locations = locations
+      state.search.locations = locations.sorted(by: \.name)
     }
     return .none
     
   case .measurementsResponse(.success(let measurements)):
-    state.isLoading = false
+    state.search.isLoading = false
     if measurements.isEmpty {
-      state.errorMessage = "No results"
+      state.search.errorMessage = "No results"
+      return .none
     } else {
       state.measurements = measurements
+      return Effect(value: .searchCompleted)
     }
-    return .none
     
   case .countrySelected(let country):
-    if state.selectedCountry == country {
-      state.selectedCountry = nil
-      state.selectedZone = nil
+    if state.search.selectedCountry == country {
+      state.search.selectedCountry = nil
+      state.search.selectedZone = nil
       state.selectedLocation = nil
-      state.zones = []
-      state.locations = []
+      state.search.zones = []
+      state.search.locations = []
       return .none
     }
-    state.selectedCountry = country
-    state.isLoading = true
+    state.search.selectedCountry = country
+    state.search.isLoading = true
     return environment.openAQIClient
       .getZones(country)
       .receive(on: environment.mainQueue)
@@ -101,14 +107,14 @@ let searchReducer = Reducer<SearchState, SearchAction, SearchEnvironment> { stat
       .map(SearchAction.zonesResponse)
     
   case .zoneSelected(let zone):
-    if state.selectedZone == zone {
-      state.selectedZone = nil
+    if state.search.selectedZone == zone {
+      state.search.selectedZone = nil
       state.selectedLocation = nil
-      state.locations = []
+      state.search.locations = []
       return .none
     }
-    state.selectedZone = zone
-    state.isLoading = true
+    state.search.selectedZone = zone
+    state.search.isLoading = true
     return environment.openAQIClient
       .getLocations(zone)
       .receive(on: environment.mainQueue)
@@ -121,7 +127,7 @@ let searchReducer = Reducer<SearchState, SearchAction, SearchEnvironment> { stat
       return .none
     }
     state.selectedLocation = location
-    state.isLoading = true
+    state.search.isLoading = true
     return environment.openAQIClient
       .getMeasurements(location, environment.oldestDate, environment.currentDate, environment.locale)
       .receive(on: environment.mainQueue)
@@ -129,7 +135,8 @@ let searchReducer = Reducer<SearchState, SearchAction, SearchEnvironment> { stat
       .map(SearchAction.measurementsResponse)
   
   case .viewAppeared:
-    if state.countries.isEmpty {
+    if state.search.countries.isEmpty {
+      state.search.isLoading = true
       return environment.openAQIClient
         .getCountries()
         .receive(on: environment.mainQueue)
@@ -139,15 +146,19 @@ let searchReducer = Reducer<SearchState, SearchAction, SearchEnvironment> { stat
     return .none
     
   case .errorAlertDismissed:
-    state.errorMessage = nil
+    state.search.errorMessage = nil
     return .none
     
   case .countriesResponse(.failure(let error)),
        .zonesResponse(.failure(let error)),
        .locationsResponse(.failure(let error)),
        .measurementsResponse(.failure(let error)):
-    state.isLoading = false
-    state.errorMessage = error.localizedDescription
+    state.search.isLoading = false
+    state.search.errorMessage = error.localizedDescription
+    return .none
+    
+    // Signals to the MeasurementsView that the search is completed
+  case .searchCompleted:
     return .none
   }
 }
