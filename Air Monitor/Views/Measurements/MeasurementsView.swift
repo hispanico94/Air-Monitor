@@ -20,7 +20,12 @@ struct MeasurementsView: View {
         Group {
           if viewStore.cells.isEmpty == false {
             List {
-              ForEach(viewStore.cells, content: ValueCell.init(state:))
+              Section(header: self.getSectionHeaderTitle(
+                zone: viewStore.selectedZone?.name,
+                country: viewStore.selectedCountry?.name
+              )) {
+                ForEach(viewStore.cells, content: ValueCell.init(state:))
+              }
             }
           } else {
             Text(viewStore.emptyMessage)
@@ -67,6 +72,19 @@ struct MeasurementsView: View {
       Text("Measurements")
     }
   }
+  
+  func getSectionHeaderTitle(zone: String?, country: String?) -> some View {
+    Text("\(zone ?? "") – \(country ?? "")")
+      .font(.headline)
+      .padding(16)
+      .background(Color(.secondarySystemBackground))
+      .cornerRadius(8)
+      .shadow(radius: 3, y: 3)
+      .frame(maxWidth: .infinity)
+      .frame(height: 70)
+      .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+      .background(Color(.systemBackground))
+  }
 }
 
 struct MeasurementsView_Previews: PreviewProvider {
@@ -79,6 +97,8 @@ struct MeasurementsView_Previews: PreviewProvider {
           Measurement(date: Date().addingTimeInterval(-60*60*24*2), value: .init(parameter: .pm10, value: 12, unit: .microgramsPerCubicMeter)),
           Measurement(date: Date().addingTimeInterval(-60*60*24*3), value: .init(parameter: .pm10, value: 9, unit: .microgramsPerCubicMeter))
         ],
+        selectedCountry: Country(code: "IT", name: "Italy"),
+        selectedZone: Zone(id: "Frosinone", name: "Frosinone"),
         selectedLocation: Location(id: "IT1", name: "Cassino", formattedName: "Cassino", lastUpdated: Date())
       ),
       reducer: measurementsReducer.debug(),

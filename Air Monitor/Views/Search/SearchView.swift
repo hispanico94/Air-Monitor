@@ -21,14 +21,14 @@ struct SearchView: View {
             if viewStore.state.search.countries.isEmpty == false {
               self.makeCountrySection(
                 countries: viewStore.state.search.countries,
-                selectedCountry: viewStore.state.search.selectedCountry,
+                selectedCountry: viewStore.state.selectedCountry,
                 countryTapped: { viewStore.send(.countrySelected($0)) })
             }
             
             if viewStore.state.search.zones.isEmpty == false {
               self.makeZoneSection(
                 zones: viewStore.state.search.zones,
-                selectedZone: viewStore.state.search.selectedZone,
+                selectedZone: viewStore.state.selectedZone,
                 zoneTapped: { viewStore.send(.zoneSelected($0)) })
             }
             

@@ -11,6 +11,8 @@ import Foundation
 
 struct SearchMeasurementsState: Equatable {
   var measurements: [Measurement] = []
+  var selectedCountry: Country? = nil
+  var selectedZone: Zone? = nil
   var selectedLocation: Location? = nil
   var search: SearchState = .init()
 }
@@ -19,9 +21,6 @@ struct SearchState: Equatable {
   var countries: [Country] = []
   var zones: [Zone] = []
   var locations: [Location] = []
-  
-  var selectedCountry: Country? = nil
-  var selectedZone: Zone? = nil
   
   var errorMessage: String? = nil
   var isLoading: Bool = false
@@ -90,15 +89,15 @@ let searchReducer = Reducer<SearchMeasurementsState, SearchAction, SearchEnviron
     }
     
   case .countrySelected(let country):
-    if state.search.selectedCountry == country {
-      state.search.selectedCountry = nil
-      state.search.selectedZone = nil
+    if state.selectedCountry == country {
+      state.selectedCountry = nil
+      state.selectedZone = nil
       state.selectedLocation = nil
       state.search.zones = []
       state.search.locations = []
       return .none
     }
-    state.search.selectedCountry = country
+    state.selectedCountry = country
     state.search.isLoading = true
     return environment.openAQIClient
       .getZones(country)
@@ -107,13 +106,13 @@ let searchReducer = Reducer<SearchMeasurementsState, SearchAction, SearchEnviron
       .map(SearchAction.zonesResponse)
     
   case .zoneSelected(let zone):
-    if state.search.selectedZone == zone {
-      state.search.selectedZone = nil
+    if state.selectedZone == zone {
+      state.selectedZone = nil
       state.selectedLocation = nil
       state.search.locations = []
       return .none
     }
-    state.search.selectedZone = zone
+    state.selectedZone = zone
     state.search.isLoading = true
     return environment.openAQIClient
       .getLocations(zone)

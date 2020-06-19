@@ -3,6 +3,8 @@ import Foundation
 
 struct MeasurementsState: Equatable {
   var measurements: [Measurement] = []
+  var selectedCountry: Country? = nil
+  var selectedZone: Zone? = nil
   var selectedLocation: Location? = nil
   var search: SearchState = .init()
   var isLocationSelectionModalShown: Bool = false
@@ -13,12 +15,16 @@ struct MeasurementsState: Equatable {
     get {
       .init(
         measurements: measurements,
+        selectedCountry: selectedCountry,
+        selectedZone: selectedZone,
         selectedLocation: selectedLocation,
         search: search
       )
     }
     set {
       measurements = newValue.measurements
+      selectedCountry = newValue.selectedCountry
+      selectedZone = newValue.selectedZone
       selectedLocation = newValue.selectedLocation
       search = newValue.search
     }
