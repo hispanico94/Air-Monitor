@@ -13,18 +13,18 @@ struct MeasurementsView: View {
   let store: Store<MeasurementsState, MeasurementsAction>
   
   var body: some View {
-    UITableView.appearance().separatorStyle = .none
-    
-    return WithViewStore(self.store) { viewStore in
+    WithViewStore(self.store) { viewStore in
       NavigationView {
         Group {
           if viewStore.cells.isEmpty == false {
-            List {
+            ScrollView {
               Section(header: self.getSectionHeaderTitle(
                 zone: viewStore.selectedZone?.name,
                 country: viewStore.selectedCountry?.name
               )) {
-                ForEach(viewStore.cells, content: ValueCell.init(state:))
+                VStack {
+                  ForEach(viewStore.cells, content: ValueCell.init(state:))
+                }
               }
             }
           } else {

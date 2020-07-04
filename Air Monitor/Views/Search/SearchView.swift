@@ -134,6 +134,7 @@ struct SearchView: View {
       }
       .padding(.horizontal, 16)
     }
+    .foregroundColor(.primary)
   }
 }
 
