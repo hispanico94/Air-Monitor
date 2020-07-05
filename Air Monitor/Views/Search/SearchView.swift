@@ -12,29 +12,51 @@ import SwiftUI
 struct SearchView: View {
   let store: Store<SearchMeasurementsState, SearchAction>
   
+  @State private var searchString: String = ""
+  
+  init(store: Store<SearchMeasurementsState, SearchAction>) {
+    self.store = store
+    
+    UITableView.appearance().tableHeaderView = UIView(
+      frame: CGRect(
+        x: 0,
+        y: 0,
+        width: 0,
+        height: Double.leastNonzeroMagnitude
+    ))
+  }
+  
   var body: some View {
     
     WithViewStore(self.store) { viewStore in
       NavigationView {
         ZStack {
           List {
-            if viewStore.state.search.countries.isEmpty == false {
+            
+            SearchBar(
+              text: viewStore.binding(
+                get: { $0.search.searchString },
+                send: { .searchTextEntered($0) }),
+              placeholder: viewStore.state.search.searchPlaceholder)
+              .buttonStyle(PlainButtonStyle())
+            
+            if viewStore.state.search.allCountries.isEmpty == false {
               self.makeCountrySection(
-                countries: viewStore.state.search.countries,
+                countries: viewStore.state.search.displayedCountries,
                 selectedCountry: viewStore.state.selectedCountry,
                 countryTapped: { viewStore.send(.countrySelected($0)) })
             }
             
-            if viewStore.state.search.zones.isEmpty == false {
+            if viewStore.state.search.allZones.isEmpty == false {
               self.makeZoneSection(
-                zones: viewStore.state.search.zones,
+                zones: viewStore.state.search.displayedZones,
                 selectedZone: viewStore.state.selectedZone,
                 zoneTapped: { viewStore.send(.zoneSelected($0)) })
             }
             
-            if viewStore.state.search.locations.isEmpty == false {
+            if viewStore.state.search.allLocations.isEmpty == false {
               self.makeLocationSection(
-                locations: viewStore.state.search.locations,
+                locations: viewStore.state.search.displayedLocations,
                 selectedLocation: viewStore.state.selectedLocation,
                 locationTapped: { viewStore.send(.locationSelected($0)) })
             }

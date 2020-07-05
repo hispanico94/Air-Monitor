@@ -19,6 +19,7 @@ struct SearchBar: View {
         
         TextField(placeholder, text: $text)
           .foregroundColor(.primary)
+          .textFieldStyle(RoundedBorderTextFieldStyle())
         
         if !text.isEmpty {
           Button(action: {
@@ -30,11 +31,8 @@ struct SearchBar: View {
           EmptyView()
         }
       }
-      .padding(.all, 8)
+      .padding(.vertical, 8)
       .foregroundColor(.secondary)
-      .background(Color(.secondarySystemBackground))
-      .cornerRadius(8)
     }
-  .padding()
   }
 }

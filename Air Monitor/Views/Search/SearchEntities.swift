@@ -18,9 +18,16 @@ struct SearchMeasurementsState: Equatable {
 }
 
 struct SearchState: Equatable {
-  var countries: [Country] = []
-  var zones: [Zone] = []
-  var locations: [Location] = []
+  var allCountries: [Country] = []
+  var allZones: [Zone] = []
+  var allLocations: [Location] = []
+  
+  var displayedCountries: [Country] = []
+  var displayedZones: [Zone] = []
+  var displayedLocations: [Location] = []
+  
+  var searchPlaceholder: String = "Search countries"
+  var searchString: String = ""
   
   var errorMessage: String? = nil
   var isLoading: Bool = false
@@ -35,6 +42,8 @@ enum SearchAction {
   case countrySelected(Country)
   case zoneSelected(Zone)
   case locationSelected(Location)
+  
+  case searchTextEntered(String)
   
   case viewAppeared
   case errorAlertDismissed
@@ -56,7 +65,8 @@ let searchReducer = Reducer<SearchMeasurementsState, SearchAction, SearchEnviron
     if countries.isEmpty {
       state.search.errorMessage = "No results"
     } else {
-      state.search.countries = countries.sorted(by: \.name)
+      state.search.allCountries = countries.sorted(by: \.name)
+      state.search.displayedCountries = state.search.allCountries
     }
     return .none
     
@@ -65,7 +75,8 @@ let searchReducer = Reducer<SearchMeasurementsState, SearchAction, SearchEnviron
     if zones.isEmpty {
       state.search.errorMessage = "No results"
     } else {
-      state.search.zones = zones.sorted(by: \.name)
+      state.search.allZones = zones.sorted(by: \.name)
+      state.search.displayedZones = state.search.allZones
     }
     return .none
     
@@ -74,7 +85,8 @@ let searchReducer = Reducer<SearchMeasurementsState, SearchAction, SearchEnviron
     if locations.isEmpty {
       state.search.errorMessage = "No results"
     } else {
-      state.search.locations = locations.sorted(by: \.name)
+      state.search.allLocations = locations.sorted(by: \.name)
+      state.search.displayedLocations = state.search.allLocations
     }
     return .none
     
@@ -89,16 +101,23 @@ let searchReducer = Reducer<SearchMeasurementsState, SearchAction, SearchEnviron
     }
     
   case .countrySelected(let country):
+    state.search.searchString = ""
+    
     if state.selectedCountry == country {
       state.selectedCountry = nil
       state.selectedZone = nil
       state.selectedLocation = nil
-      state.search.zones = []
-      state.search.locations = []
+      state.search.allZones = []
+      state.search.displayedZones = []
+      state.search.allLocations = []
+      state.search.displayedLocations = []
+      state.search.displayedCountries = state.search.allCountries
+      state.search.searchPlaceholder = "Search countries"
       return .none
     }
     state.selectedCountry = country
     state.search.isLoading = true
+    state.search.searchPlaceholder = "Search zones"
     return environment.openAQIClient
       .getZones(country)
       .receive(on: environment.mainQueue)
@@ -106,14 +125,20 @@ let searchReducer = Reducer<SearchMeasurementsState, SearchAction, SearchEnviron
       .map(SearchAction.zonesResponse)
     
   case .zoneSelected(let zone):
+    state.search.searchString = ""
+    
     if state.selectedZone == zone {
       state.selectedZone = nil
       state.selectedLocation = nil
-      state.search.locations = []
+      state.search.allLocations = []
+      state.search.displayedLocations = []
+      state.search.displayedZones = state.search.allZones
+      state.search.searchPlaceholder = "Search zones"
       return .none
     }
     state.selectedZone = zone
     state.search.isLoading = true
+    state.search.searchPlaceholder = "Search locations"
     return environment.openAQIClient
       .getLocations(zone)
       .receive(on: environment.mainQueue)
@@ -121,8 +146,12 @@ let searchReducer = Reducer<SearchMeasurementsState, SearchAction, SearchEnviron
       .map(SearchAction.locationsResponse)
     
   case .locationSelected(let location):
+    state.search.searchString = ""
+    
     if state.selectedLocation == location {
       state.selectedLocation = nil
+      state.search.displayedLocations = state.search.allLocations
+      state.search.searchPlaceholder = "Search locations"
       return .none
     }
     state.selectedLocation = location
@@ -132,9 +161,38 @@ let searchReducer = Reducer<SearchMeasurementsState, SearchAction, SearchEnviron
       .receive(on: environment.mainQueue)
       .catchToEffect()
       .map(SearchAction.measurementsResponse)
+    
+  case .searchTextEntered(let searchText):
+    state.search.searchString = searchText
+    
+    guard state.selectedLocation == nil else { return .none }
+    
+    if state.selectedZone != nil {
+      state.search.displayedLocations = state.search.allLocations.filter {
+        searchText.isEmpty
+          ? true
+          : $0.name.lowercased().contains(searchText.lowercased())
+      }
+      
+    } else if state.selectedCountry != nil {
+      state.search.displayedZones = state.search.allZones.filter {
+        searchText.isEmpty
+          ? true
+          : $0.name.lowercased().contains(searchText.lowercased())
+      }
+      
+    } else {
+      state.search.displayedCountries = state.search.allCountries.filter {
+        searchText.isEmpty
+          ? true
+          : $0.name.lowercased().contains(searchText.lowercased())
+      }
+    }
+    
+    return .none
   
   case .viewAppeared:
-    if state.search.countries.isEmpty {
+    if state.search.allCountries.isEmpty {
       state.search.isLoading = true
       return environment.openAQIClient
         .getCountries()
