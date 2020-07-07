@@ -12,8 +12,6 @@ import SwiftUI
 struct SearchView: View {
   let store: Store<SearchMeasurementsState, SearchAction>
   
-  @State private var searchString: String = ""
-  
   init(store: Store<SearchMeasurementsState, SearchAction>) {
     self.store = store
     

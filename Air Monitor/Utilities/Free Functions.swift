@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 func updating<A>(_ value: A, using f: (inout A) -> Void) -> A {
   var mValue = value
@@ -85,4 +86,8 @@ func zip<A, B, C, D, E>(_ a: A?, _ b: B?, _ c: C?, _ d: D?, _ e: E?) -> (A, B, C
     let e = e
     else { return nil }
   return (a, b, c, d, e)
+}
+
+func resignFirstResponder() {
+  UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
 }

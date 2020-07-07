@@ -56,6 +56,7 @@ struct SearchEnvironment {
   var currentDate: Date = .init()
   var oldestDate: Date = .init(timeIntervalSinceNow: -60*60*24*30)
   var locale: Locale = .init(identifier: "it_IT")
+  var dismissKeyboard: () -> Void = resignFirstResponder
 }
 
 let searchReducer = Reducer<SearchMeasurementsState, SearchAction, SearchEnvironment> { state, action, environment in
@@ -113,16 +114,20 @@ let searchReducer = Reducer<SearchMeasurementsState, SearchAction, SearchEnviron
       state.search.displayedLocations = []
       state.search.displayedCountries = state.search.allCountries
       state.search.searchPlaceholder = "Search countries"
-      return .none
+      return .fireAndForget { environment.dismissKeyboard() }
     }
     state.selectedCountry = country
     state.search.isLoading = true
     state.search.searchPlaceholder = "Search zones"
-    return environment.openAQIClient
-      .getZones(country)
-      .receive(on: environment.mainQueue)
-      .catchToEffect()
-      .map(SearchAction.zonesResponse)
+    
+    return .concatenate(
+      .fireAndForget { environment.dismissKeyboard() },
+      environment.openAQIClient
+        .getZones(country)
+        .receive(on: environment.mainQueue)
+        .catchToEffect()
+        .map(SearchAction.zonesResponse)
+    )
     
   case .zoneSelected(let zone):
     state.search.searchString = ""
@@ -134,16 +139,19 @@ let searchReducer = Reducer<SearchMeasurementsState, SearchAction, SearchEnviron
       state.search.displayedLocations = []
       state.search.displayedZones = state.search.allZones
       state.search.searchPlaceholder = "Search zones"
-      return .none
+      return .fireAndForget { environment.dismissKeyboard() }
     }
     state.selectedZone = zone
     state.search.isLoading = true
     state.search.searchPlaceholder = "Search locations"
-    return environment.openAQIClient
+    return .concatenate(
+      .fireAndForget { environment.dismissKeyboard() },
+      environment.openAQIClient
       .getLocations(zone)
       .receive(on: environment.mainQueue)
       .catchToEffect()
       .map(SearchAction.locationsResponse)
+    )
     
   case .locationSelected(let location):
     state.search.searchString = ""
@@ -152,15 +160,18 @@ let searchReducer = Reducer<SearchMeasurementsState, SearchAction, SearchEnviron
       state.selectedLocation = nil
       state.search.displayedLocations = state.search.allLocations
       state.search.searchPlaceholder = "Search locations"
-      return .none
+      return .fireAndForget { environment.dismissKeyboard() }
     }
     state.selectedLocation = location
     state.search.isLoading = true
-    return environment.openAQIClient
+    return .concatenate(
+      .fireAndForget { environment.dismissKeyboard() },
+      environment.openAQIClient
       .getMeasurements(location, environment.oldestDate, environment.currentDate, environment.locale)
       .receive(on: environment.mainQueue)
       .catchToEffect()
       .map(SearchAction.measurementsResponse)
+    )
     
   case .searchTextEntered(let searchText):
     state.search.searchString = searchText
